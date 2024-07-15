@@ -386,6 +386,7 @@ public partial class SouvenirModule
     const string _Planets = "planets";
     const string _PlayfairCycle = "playfairCycle";
     const string _Poetry = "poetry";
+    const string _PointlessMachines = "PointlessMachines";
     const string _PolyhedralMaze = "PolyhedralMazeModule";
     const string _PrimeEncryption = "primeEncryption";
     const string _Probing = "Probing";
@@ -949,6 +950,7 @@ public partial class SouvenirModule
             [_Planets] = (ProcessPlanets, "Planets", "KingSlendy"),
             [_PlayfairCycle] = (ProcessPlayfairCycle, "Playfair Cycle", "TasThiluna"),
             [_Poetry] = (ProcessPoetry, "Poetry", "Timwi"),
+            [_PointlessMachines] = (ProcessPointlessMachines, "Pointless Machines", "Anonymous"),
             [_PolyhedralMaze] = (ProcessPolyhedralMaze, "Polyhedral Maze", "Timwi"),
             [_PrimeEncryption] = (ProcessPrimeEncryption, "Prime Encryption", "VFlyer"),
             [_Probing] = (ProcessProbing, "Probing", "Timwi"),

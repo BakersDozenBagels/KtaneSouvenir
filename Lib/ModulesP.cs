@@ -503,6 +503,24 @@ public partial class SouvenirModule
         addQuestions(module, answers.Select((ans, st) => makeQuestion(Question.PoetryAnswers, _Poetry, formatArgs: new[] { ordinal(st + 1) }, correctAnswers: new[] { ans }, preferredWrongAnswers: answers.ToArray())));
     }
 
+    private IEnumerable<object> ProcessPointlessMachines(KMBombModule module)
+    {
+        var comp = GetComponent(module, "PointlessMachinesScript");
+        var propSolved = GetProperty<bool>(comp, "IsSolved", isPublic: true);
+
+        while (!propSolved.Get())
+            yield return new WaitForSeconds(.1f);
+        _modulesSolved.IncSafe(_PointlessMachines);
+
+        // An enum type
+        var flashes = GetArrayField<object>(comp, "Flashes", isPublic: true)
+            .Get(expectedLength: 6, validator: v => (int)v is > 0 and < 5 ? null : $"Unknown color {v}").Select(v => v.ToString()).ToArray();
+
+        addQuestions(module, flashes.Select((f, i) =>
+            makeQuestion(Question.PointlessMachinesFlashes, _PointlessMachines, formatArgs: new[] { ordinal(i + 1) },
+                correctAnswers: new[] { f })));
+    }
+
     private IEnumerable<object> ProcessPolyhedralMaze(KMBombModule module)
     {
         var comp = GetComponent(module, "PolyhedralMazeModule");
