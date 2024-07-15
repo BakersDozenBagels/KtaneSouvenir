@@ -512,10 +512,19 @@ public partial class SouvenirModule
             yield return new WaitForSeconds(.1f);
         _modulesSolved.IncSafe(_PointlessMachines);
 
-        // An enum type
-        var flashes = GetArrayField<object>(comp, "Flashes", isPublic: true)
-            .Get(expectedLength: 6, validator: v => (int)v is > 0 and < 5 ? null : $"Unknown color {v}").Select(v => v.ToString()).ToArray();
+        // ERROR HERE. THIS IS THE EDITOR CONVENIENCE FIELD.
+        // THE MODULE NEVER STORES THE REAL ARRAY IN AN ACCESSIBLE FIELD.
+        // An array of enum values
+        var flashes = GetField<Array>(comp, "Flashes", isPublic: true)
+            .Get(v =>
+                v.Length != 6 ? "Bad array length" :
+                v.Cast<int>().Select(i => i is >= 0 and < 5 ? null : $"Unknown color {v}")
+                    .Aggregate((a, b) => a is null ? b : b is null ? a : $"{a}, {b}"))
+            .Cast<object>()
+            .Select(v => v.ToString())
+            .ToArray();
 
+        // All 5 colors always appear (with one duplicate), so no need to add preferredWrongAnswers
         addQuestions(module, flashes.Select((f, i) =>
             makeQuestion(Question.PointlessMachinesFlashes, _PointlessMachines, formatArgs: new[] { ordinal(i + 1) },
                 correctAnswers: new[] { f })));

@@ -2033,7 +2033,7 @@
         PoetryAnswers,
 
         [SouvenirQuestion("What color flashed {1} in {0}?", "Pointless Machines", TwoColumns4Answers, "White", "Purple", "Red", "Blue", "Yellow",
-            ExampleExtraFormatArguments = new [] { QandA.Ordinal }, ExampleExtraFormatArgumentGroupSize = 1)]
+            ExampleExtraFormatArguments = new[] { QandA.Ordinal }, ExampleExtraFormatArgumentGroupSize = 1)]
         PointlessMachinesFlashes,
 
         [SouvenirQuestion("What was the starting position in {0}?", "Polyhedral Maze", ThreeColumns6Answers)]
