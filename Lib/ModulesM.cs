@@ -1,8 +1,10 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using Souvenir;
 using UnityEngine;
+using static Souvenir.AnswerGenerator;
 
 public partial class SouvenirModule
 {
@@ -171,6 +173,57 @@ public partial class SouvenirModule
         addQuestions(module,
             makeQuestion(Question.MaritimeFlagsBearing, module, correctAnswers: new[] { bearing.ToString() }),
             makeQuestion(Question.MaritimeFlagsCallsign, module, correctAnswers: new[] { callsign.ToLowerInvariant() }));
+    }
+
+    private IEnumerator<YieldInstruction> ProcessMaritimeSemaphore(ModuleData module)
+    {
+        yield return WaitForSolve;
+        var comp = GetComponent(module, "MaritimeSemaphoreModule");
+        var flags = GetField<IList>(comp, "_flagInfos").Get(l => l.Count != 6 ? "Expected length 6" : null);
+
+        List<QandA> questions = new(13);
+
+        var isDummy = GetProperty<bool>(flags[0], "IsDummy", isPublic: true);
+        int dummyPos = -1;
+        for (int i = 0; i < 6; i++)
+        {
+            if (isDummy.GetFrom(flags[i]))
+            {
+                if (dummyPos != -1)
+                    throw new AbandonModuleException($"Multiple dummy flags {dummyPos}, {i}");
+                dummyPos = i;
+            }
+        }
+        if (dummyPos == -1)
+            throw new AbandonModuleException("No dummy flag");
+        questions.Add(makeQuestion(Question.MaritimeSemaphoreDummy, module, correctAnswers: new[] { Ordinal(dummyPos + 1) }));
+
+        var solutionPos = GetIntField(comp, "_solution").Get(0, 5); // The solution page is still visible after
+
+        var left = GetField<int>(flags[0], "LeftMaritime", isPublic: true);
+        var right = GetField<int>(flags[0], "RightMaritime", isPublic: true);
+        var semaphore = GetField<int>(flags[0], "Semaphore", isPublic: true);
+
+        var letters = Enumerable.Range(0, 6).Except(new[] { dummyPos, solutionPos }).Select(i => (
+            I: Ordinal(i + 1),
+            L: left.GetFrom(flags[i], i => i is < 0 or > 25 ? $"Left letter {i} out of range 0-25" : null), // The five non-dummy flags must not have numbers
+            R: right.GetFrom(flags[i], i => i is < 0 or > 25 ? $"Right letter {i} out of range 0-25" : null),
+            S: semaphore.GetFrom(flags[i], i => i is < 0 or > 25 ? $"Semaphore letter {i} out of range 0-25" : null)
+        )).ToArray();
+
+        var alpha = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+
+        for (int i = 0; i < 4; i++)
+        {
+            questions.Add(makeQuestion(Question.MaritimeSemaphoreLetter, module,
+                formatArgs: new[] { letters[i].I, "left flag" }, correctAnswers: new[] { alpha[letters[i].L].ToString() }));
+            questions.Add(makeQuestion(Question.MaritimeSemaphoreLetter, module,
+                formatArgs: new[] { letters[i].I, "right flag" }, correctAnswers: new[] { alpha[letters[i].R].ToString() }));
+            questions.Add(makeQuestion(Question.MaritimeSemaphoreLetter, module,
+                formatArgs: new[] { letters[i].I, "semaphore" }, correctAnswers: new[] { alpha[letters[i].S].ToString() }));
+        }
+
+        addQuestions(module, questions);
     }
 
     private IEnumerator<YieldInstruction> ProcessMaroonButton(ModuleData module)
