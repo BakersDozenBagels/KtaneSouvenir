@@ -104,10 +104,8 @@ namespace Souvenir
             return sprite;
         }
 
-        public static Sprite GenerateGridSprite(int width, int height, int index)
-        {
-            return GenerateGridSprite(new Coord(width, height, index));
-        }
+        public static Sprite GenerateGridSprite(int width, int height, int index) =>
+            GenerateGridSprite(new Coord(width, height, index));
 
         public static Sprite GenerateGridSprite(string spriteKey, int tw, int th, (int x, int y)[] squares, int highlightedCell, string spriteName, float? pixelsPerUnit = null)
         {
@@ -151,12 +149,31 @@ namespace Souvenir
         public static IEnumerable<Sprite> TranslateSpritesScaled(this IEnumerable<Sprite> sprites, float pixelsPerUnitMultiplier = 1f) =>
             (sprites ?? throw new ArgumentNullException(nameof(sprites))).Select(spr => TranslateSprite(spr, spr.pixelsPerUnit * pixelsPerUnitMultiplier));
 
+        private static readonly Dictionary<Texture2D, Sprite> _toSpriteCache = new();
         public static Sprite ToSprite(this Texture2D texture)
         {
-            var newSprite = Sprite.Create(texture, new Rect(0, 0, texture.width, texture.height), new Vector2(0, .5f), texture.height * (60f / 17));
+            if (_toSpriteCache.TryGetValue(texture, out var newSprite) && newSprite != null)
+                return newSprite;
+
+            newSprite = Sprite.Create(texture, new Rect(0, 0, texture.width, texture.height), new Vector2(0, .5f), texture.height * (60f / 17));
             newSprite.name = texture.name;
-            return newSprite;
+            return _toSpriteCache[texture] = newSprite;
         }
+        public static IEnumerable<Sprite> ToSprites(this IEnumerable<Texture2D> textures) =>
+            textures.Select(x => x.ToSprite());
+        private static readonly Dictionary<Sprite, Sprite> _toAnswerSpriteCache = new();
+        public static Sprite ToAnswerSprite(this Sprite sprite)
+        {
+            if (_toAnswerSpriteCache.TryGetValue(sprite, out var newSprite) && newSprite != null)
+                return newSprite;
+
+            newSprite = Sprite.Create(sprite.texture, new Rect(0, 0, sprite.texture.width, sprite.texture.height), new Vector2(0, .5f), sprite.texture.height * (60f / 17));
+            newSprite.name = sprite.name;
+            return _toAnswerSpriteCache[sprite] = newSprite;
+        }
+        public static IEnumerable<Sprite> ToAnswerSprites(this IEnumerable<Sprite> sprites) =>
+            sprites.Select(x => x.ToAnswerSprite());
+
 
         // Height must be even, should be a power of 2
         const int HEIGHT = 128;
@@ -264,6 +281,9 @@ namespace Souvenir
             public Color[] Result;
         }
 
+        private static readonly Dictionary<Texture2D, Texture2D> _textureCache = new();
+        private static readonly Dictionary<Sprite, Sprite> _spriteCache = new();
+
         /// <summary>
         /// Recolors every pixel in <paramref name="source"/> while preserving alpha.
         /// The default color is Souvenir's standard cream.
@@ -275,27 +295,65 @@ namespace Souvenir
         /// <returns>A new texture with the recoloring applied.</returns>
         public static Texture2D Recolor(this Texture2D source, byte r = 0xff, byte g = 0xf8, byte b = 0xdd)
         {
+            if (_textureCache.TryGetValue(source, out var dest) && dest != null)
+                return dest;
+
             RenderTexture renderTex = RenderTexture.GetTemporary(source.width, source.height, 0, RenderTextureFormat.Default, RenderTextureReadWrite.Linear);
 
             RenderTexture previous = RenderTexture.active;
             ColorBlit.color = new Color32(r, g, b, 0xff);
             Graphics.Blit(source, renderTex, ColorBlit, 0);
             RenderTexture.active = renderTex;
-            Texture2D dest = new(source.width, source.height, TextureFormat.ARGB32, true);
+            dest = new(source.width, source.height, TextureFormat.ARGB32, true);
             dest.ReadPixels(new Rect(0, 0, renderTex.width, renderTex.height), 0, 0);
             dest.Apply();
             RenderTexture.active = previous;
             RenderTexture.ReleaseTemporary(renderTex);
             dest.name = source.name;
-            return dest;
-
-            //var tex = new Texture2D(source.width, source.height, source.format, mipmap: true, true);
-            //var colors = source.GetPixels32();
-            //for (int i = 0; i < colors.Length; i++)
-            //    colors[i] = new Color32(r, g, b, colors[i].a);
-            //tex.SetPixels32(colors);
-            //tex.Apply(true);
-            //return tex;
+            return _textureCache[source] = dest;
         }
+
+        /// <summary>
+        /// Recolors every pixel in each texture while preserving alpha.
+        /// The default color is Souvenir's standard cream.
+        /// </summary>
+        /// <param name="source">The textures to recolor.</param>
+        /// <param name="r">The red value to use.</param>
+        /// <param name="g">The green value to use.</param>
+        /// <param name="b">The blue value to use.</param>
+        /// <returns>A new array containing new textures with the recoloring applied.</returns>
+        public static IEnumerable<Texture2D> Recolor(this IEnumerable<Texture2D> source, byte r = 0xff, byte g = 0xf8, byte b = 0xdd) =>
+            source.Select(t => t.Recolor(r, g, b));
+
+        /// <summary>
+        /// Recolors every pixel in the sprite while preserving alpha.
+        /// The default color is Souvenir's standard cream.
+        /// </summary>
+        /// <param name="source">The sprite to recolor.</param>
+        /// <param name="r">The red value to use.</param>
+        /// <param name="g">The green value to use.</param>
+        /// <param name="b">The blue value to use.</param>
+        /// <returns>A new sprite with the recoloring applied.</returns>
+        public static Sprite Recolor(this Sprite source, byte r = 0xff, byte g = 0xf8, byte b = 0xdd)
+        {
+            if (_spriteCache.TryGetValue(source, out var newSprite) && source != null)
+                return newSprite;
+
+            newSprite = Sprite.Create(source.texture.Recolor(r, g, b), source.rect, source.pivot, source.pixelsPerUnit);
+            newSprite.name = source.name;
+            return _spriteCache[source] = newSprite;
+        }
+
+        /// <summary>
+        /// Recolors every pixel in each sprite while preserving alpha.
+        /// The default color is Souvenir's standard cream.
+        /// </summary>
+        /// <param name="source">The sprites to recolor.</param>
+        /// <param name="r">The red value to use.</param>
+        /// <param name="g">The green value to use.</param>
+        /// <param name="b">The blue value to use.</param>
+        /// <returns>A new array containing new sprites with the recoloring applied.</returns>
+        public static IEnumerable<Sprite> Recolor(this IEnumerable<Sprite> source, byte r = 0xff, byte g = 0xf8, byte b = 0xdd) =>
+            source.Select(t => t.Recolor(r, g, b));
     }
 }

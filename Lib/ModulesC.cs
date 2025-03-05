@@ -198,26 +198,27 @@ public partial class SouvenirModule
 
     private IEnumerator<YieldInstruction> ProcessCharacterSlots(ModuleData module)
     {
-        var comp = GetComponent(module, "CharacterSlotsScript");
         yield return WaitForSolve;
+        var comp = GetComponent(module, "CharacterSlotsScript");
 
         var characters = GetField<Array>(comp, "slotStates").Get(arr => arr.Rank != 2 || arr.GetLength(0) != 3 || arr.GetLength(1) != 3 ? "expected size 3×3 array" : null);
 
         var fldName = GetField<Enum>(characters.GetValue(0, 0), "characterName");
         var stageNumber = GetField<int>(comp, "stageNumber").Get();
         var qs = new List<QandA>();
+        var sprites = GetArrayField<Sprite>(comp, "sprites", true).Get(expectedLength: 84).ToAnswerSprites().ToArray();
 
         for (int row = 0; row < stageNumber; row++)
         {
             for (int col = 0; col < 3; col++)
             {
-                string name = fldName.GetFrom(characters.GetValue(row, col), ch => !CharacterSlotsSprites.Any(s => s.name.Replace(" ", "") == ch.ToString()) ? "unexpected character name" : null).ToString();
+                var sprite = sprites[(int) (object) fldName.GetFrom(characters.GetValue(row, col), ch => ((int) (object) ch) is < 0 or > 83 ? "expected character index in [0, 83]" : null)];
                 qs.Add(makeQuestion(
                     question: Question.CharacterSlotsDisplayedCharacters,
                     data: module,
                     formatArgs: new[] { Ordinal(col + 1), Ordinal(row + 1) },
-                    correctAnswers: new[] { CharacterSlotsSprites.First(sprite => sprite.name.Replace(" ", "") == name) },
-                    preferredWrongAnswers: CharacterSlotsSprites));
+                    correctAnswers: new[] { sprite },
+                    allAnswers: sprites));
             }
         }
 

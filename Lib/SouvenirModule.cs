@@ -25,11 +25,8 @@ public partial class SouvenirModule : MonoBehaviour
     public KMSelectable[] Answers;
     public GameObject AnswersParent;
     public GameObject[] TpNumbers;
-    public Sprite[] ArithmelogicSprites;
     public Sprite[] AudioSprites;
     public Sprite[] AzureButtonSprites;
-    public Sprite[] BookOfMarioSprites;
-    public Sprite[] CharacterSlotsSprites;
     public Sprite[] ClockCounterSprites;
     public Sprite[] ConnectedMonitorsSprites;
     public Sprite[] EncryptedEquationsSprites;

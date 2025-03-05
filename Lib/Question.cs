@@ -156,7 +156,7 @@
         [AnswerGenerator.Integers(10, 99)]
         ArenaNumbers,
 
-        [SouvenirQuestion("What was the symbol on the submit button in {0}?", "Arithmelogic", ThreeColumns6Answers, Type = AnswerType.Sprites, SpriteFieldName = "ArithmelogicSprites")]
+        [SouvenirQuestion("What was the symbol on the submit button in {0}?", "Arithmelogic", ThreeColumns6Answers, Type = AnswerType.Sprites)]
         ArithmelogicSubmit,
         [SouvenirQuestion("Which number was selectable, but not the solution, in the {1} screen on {0}?", "Arithmelogic", ThreeColumns6Answers, TranslateFormatArgs = new[] { true },
             ExampleFormatArguments = new[] { "left", "middle", "right" }, ExampleFormatArgumentGroupSize = 1)]
@@ -365,7 +365,7 @@
         [SouvenirQuestion("Which word was shown on {0}?", "Boob Tube", OneColumn4Answers, "Shittah", "Dik-Dik", "Aktashite", "Tetheradick", "Sack-Butt", "Nobber", "Knobstick", "Jerkinhead", "Haboob", "Fanny-Blower", "Assapanick", "Fuksheet", "Clatterfart", "Humpenscrump", "Cock-Bell", "Slagger", "Pakapoo", "Wankapin", "Lobcocked", "Poonga", "Sexagesm", "Tit-Bore", "Pershitte", "Invagination", "Bumfiddler", "Nestle-Cock", "Gullgroper", "Boob Tube", "Boobyalla", "Dreamhole")]
         BoobTubeWord,
 
-        [SouvenirQuestion("Who said the {1} quote in {0}?", "Book of Mario", ThreeColumns6Answers, Type = AnswerType.Sprites, SpriteFieldName = "BookOfMarioSprites",
+        [SouvenirQuestion("Who said the {1} quote in {0}?", "Book of Mario", ThreeColumns6Answers, Type = AnswerType.Sprites,
             ExampleFormatArguments = new[] { QandA.Ordinal }, ExampleFormatArgumentGroupSize = 1)]
         BookOfMarioPictures,
         [SouvenirQuestion("What did {1} say in the {2} stage of {0}?", "Book of Mario", OneColumn4Answers, ExampleAnswers = new[] { "Dark Koopatrol. These people just blow hard...", "I came, Mario! You finna", "Absolutely, I came! Got it!", "Well, I’m so desperate, so you better save me…" },
@@ -512,7 +512,7 @@
         [AnswerGenerator.Strings("0-9")]
         CharacterShiftDigits,
 
-        [SouvenirQuestion("Who was displayed in the {1} slot in the {2} stage of {0}?", "Character Slots", ThreeColumns6Answers, Type = AnswerType.Sprites, SpriteFieldName = "CharacterSlotsSprites",
+        [SouvenirQuestion("Who was displayed in the {1} slot in the {2} stage of {0}?", "Character Slots", ThreeColumns6Answers, Type = AnswerType.Sprites,
             ExampleFormatArguments = new[] { QandA.Ordinal, QandA.Ordinal }, ExampleFormatArgumentGroupSize = 2)]
         CharacterSlotsDisplayedCharacters,
 

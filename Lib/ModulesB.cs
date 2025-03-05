@@ -704,14 +704,16 @@ public partial class SouvenirModule
         var fldNameIndex = GetIntField(comp, "x");
         var fldQuoteIndex = GetIntField(comp, "y");
         var quotes = GetStaticField<string[][]>(comp.GetType(), "quotes").Get();
+        var sprites = GetArrayField<Sprite>(comp, "genBtnSprites", true).Get(expectedLength: 14, nullContentAllowed: true);
+        if (sprites.Take(13).Any(s => s == null))
+            throw new AbandonModuleException($"Got a null sprite (in any slot but the last): {sprites.Stringify()}");
+        sprites = sprites.Take(13).ToAnswerSprites().ToArray();
 
-        var answer = new List<(string name, string quote)>();
-        var dictionary = new Dictionary<string, string[]>();
+        var answer = new List<(string name, string quote, int ix)>();
 
-        (string, string) GetPersonKeyValue(int characterIndex, int characterQuote)
-        {
-            return (UpdateString(quotes[characterIndex][0]), UpdateString(quotes[characterIndex][fldQuoteIndex.Get()]));
-        }
+        (string, string, int) GetPersonKeyValue(int characterIndex, int characterQuote) =>
+            (UpdateString(quotes[characterIndex][0]), UpdateString(quotes[characterIndex][fldQuoteIndex.Get()]), characterIndex);
+
 
         while (module.Unsolved)
         {
@@ -733,9 +735,6 @@ public partial class SouvenirModule
             yield return null;
         }
 
-        if (BookOfMarioSprites.Length != 13)
-            throw new AbandonModuleException($"Book of Mario should have 13 sprites. Counted {BookOfMarioSprites.Length}");
-
         string UpdateString(string s)
         {
             const int maxCount = 27;
@@ -756,13 +755,13 @@ public partial class SouvenirModule
 
         for (var i = 0; i < answer.Count; i++)
         {
-            var (name, quote) = answer[i];
+            var (name, quote, ix) = answer[i];
             qs.Add(makeQuestion(
                 question: Question.BookOfMarioPictures,
                 data: module,
                 formatArgs: new[] { Ordinal(i + 1) },
-                correctAnswers: new[] { BookOfMarioSprites.First(sprite => sprite.name == name) },
-                preferredWrongAnswers: BookOfMarioSprites));
+                correctAnswers: new[] { sprites[ix] },
+                allAnswers: sprites));
 
             if (!unaviableCharacters.Contains(name))
             {

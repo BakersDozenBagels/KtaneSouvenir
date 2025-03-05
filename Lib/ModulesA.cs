@@ -365,18 +365,24 @@ public partial class SouvenirModule
 
     private IEnumerator<YieldInstruction> ProcessArithmelogic(ModuleData module)
     {
+        yield return WaitForSolve;
+
         var comp = GetComponent(module, "Arithmelogic");
         var fldSymbolNum = GetIntField(comp, "submitSymbol");
         var fldSelectableValues = GetArrayField<int[]>(comp, "selectableValues");
         var fldCurrentDisplays = GetArrayField<int>(comp, "currentDisplays");
-        yield return WaitForSolve;
 
         var symbolNum = fldSymbolNum.Get(min: 0, max: 21);
         var selVal = fldSelectableValues.Get(expectedLength: 3, validator: arr => arr.Length != 4 ? $"length {arr.Length}, expected 4" : null);
         var curDisp = fldCurrentDisplays.Get(expectedLength: 3, validator: val => val < 0 || val >= 4 ? $"expected 0–3" : null);
 
-        var qs = new List<QandA>();
-        qs.Add(makeQuestion(Question.ArithmelogicSubmit, module, correctAnswers: new[] { ArithmelogicSprites[symbolNum] }, preferredWrongAnswers: ArithmelogicSprites));
+        var textures = GetArrayField<Texture>(comp, "symbolSImages", true).Get(expectedLength: 22, validator: v => v is not Texture2D ? "Expected only 2D textures" : null);
+        var sprites = textures.Cast<Texture2D>().Recolor().ToSprites().ToArray();
+
+        var qs = new List<QandA>
+        {
+            makeQuestion(Question.ArithmelogicSubmit, module, correctAnswers: new[] { sprites[symbolNum] }, allAnswers: sprites)
+        };
         var screens = new[] { "left", "middle", "right" };
         for (int i = 0; i < 3; i++)
             qs.Add(makeQuestion(Question.ArithmelogicNumbers, module, formatArgs: new[] { screens[i] },
