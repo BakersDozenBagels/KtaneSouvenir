@@ -12,7 +12,7 @@ public class Translation_csharp : TranslationBase<TranslationInfo>
     private string accessName(Question question)
     {
         var name = _translations.Get(question)?.ModuleName ?? Ut.GetAttribute(question).ModuleName;
-        if (Regex.IsMatch(name, "[^a-z0-9]|^[0-9]", RegexOptions.IgnoreCase | RegexOptions.CultureInvariant))
+        if (Regex.IsMatch(name, "[^a-z0-9_]|^[0-9]", RegexOptions.IgnoreCase | RegexOptions.CultureInvariant))
             return $"[\"{name.Replace("\"", "\\\"")}\"]";
         return $"\uE47F.{name}";
     }
@@ -107,7 +107,7 @@ public class Translation_csharp : TranslationBase<TranslationInfo>
         // What was the displayed number in 21?
         [Question._21DisplayedNumber] = new()
         {
-            QuestionText = "{0}.display",
+            QuestionText = "{0}\uE47F.display",
             ModuleName = "TwennyWan",
         },
 
@@ -116,14 +116,14 @@ public class Translation_csharp : TranslationBase<TranslationInfo>
         // What were the markings in 3D Maze?
         [Question._3DMazeMarkings] = new()
         {
-            QuestionText = "{0}.markings",
+            QuestionText = "{0}\uE47F.markings",
             ModuleName = "spwiz3DMaze",
         },
         // What was the cardinal direction in {0}?
         // What was the cardinal direction in 3D Maze?
         [Question._3DMazeBearing] = new()
         {
-            QuestionText = "{0}.direction",
+            QuestionText = "{0}\uE47F.direction",
             ModuleName = "spwiz3DMaze",
             Answers = new Dictionary<string, string>
             {
@@ -139,7 +139,7 @@ public class Translation_csharp : TranslationBase<TranslationInfo>
         // What was the received word in 3D Tap Code?
         [Question._3DTapCodeWord] = new()
         {
-            QuestionText = "3DTapCodeModule.receivedWord",
+            QuestionText = "3DTapCodeModule\uE47F.receivedWord",
             ModuleName = "3DTapCodeModule",
         },
 
@@ -148,7 +148,7 @@ public class Translation_csharp : TranslationBase<TranslationInfo>
         // What was the first goal node in 3D Tunnels?
         [Question._3DTunnelsTargetNode] = new()
         {
-            QuestionText = "{0}.goals{1}",
+            QuestionText = "{0}\uE47F.goals{1}",
             ModuleName = "3dTunnels",
         },
 
@@ -157,7 +157,7 @@ public class Translation_csharp : TranslationBase<TranslationInfo>
         // What was the initial state of the LEDs in 3 LEDs (in reading order)?
         [Question._3LEDsInitialState] = new()
         {
-            QuestionText = "{0}.initialState",
+            QuestionText = "{0}\uE47F.initialState",
             ModuleName = "threeLEDsModule",
             Answers = new Dictionary<string, string>
             {
@@ -177,7 +177,7 @@ public class Translation_csharp : TranslationBase<TranslationInfo>
         // What number was initially displayed in 3N+1?
         [Question._3NPlus1] = new()
         {
-            QuestionText = "{0}.displayed",
+            QuestionText = "{0}\uE47F.displayed",
             ModuleName = "threeNPlusOne",
         },
 
@@ -186,8 +186,8 @@ public class Translation_csharp : TranslationBase<TranslationInfo>
         // What was the displayed number in 64?
         [Question._64DisplayedNumber] = new()
         {
-            NeedsTranslation = true,
-            QuestionText = "What was the displayed number in {0}?",
+            QuestionText = "{0}\uE47F.display",
+            ModuleName = "64",
         },
 
         // 7
@@ -195,27 +195,27 @@ public class Translation_csharp : TranslationBase<TranslationInfo>
         // What was the red channel’s initial value in 7?
         [Question._7InitialValues] = new()
         {
-            NeedsTranslation = true,
-            QuestionText = "What was the {1} channel’s initial value in {0}?",
+            QuestionText = "{0}\uE47F.initial\uE47F.{1}",
+            ModuleName = "7",
             FormatArgs = new Dictionary<string, string>
             {
-                ["red"] = "red",
-                ["green"] = "green",
-                ["blue"] = "blue",
+                ["red"] = "R",
+                ["green"] = "G",
+                ["blue"] = "B",
             },
         },
         // What LED color was shown in stage {1} of {0}?
         // What LED color was shown in stage 0 of 7?
         [Question._7LedColors] = new()
         {
-            NeedsTranslation = true,
-            QuestionText = "What LED color was shown in stage {1} of {0}?",
+            QuestionText = "{0}\uE47F.stages[{1}].LED",
+            ModuleName = "7",
             Answers = new Dictionary<string, string>
             {
-                ["red"] = "red",
-                ["blue"] = "blue",
-                ["green"] = "green",
-                ["white"] = "white",
+                ["red"] = "Color.Red",
+                ["blue"] = "Color.Blue",
+                ["green"] = "Color.Green",
+                ["white"] = "Color.White",
             },
         },
 
@@ -224,15 +224,15 @@ public class Translation_csharp : TranslationBase<TranslationInfo>
         // What was the number of ball A in 9-Ball?
         [Question._9BallLetters] = new()
         {
-            NeedsTranslation = true,
-            QuestionText = "What was the number of ball {1} in {0}?",
+            QuestionText = "Array\uE47F.IndexOf({0}\uE47F.Balls, '{1}')",
+            ModuleName = "GSNineBall",
         },
         // What was the letter of ball {1} in {0}?
         // What was the letter of ball 2 in 9-Ball?
         [Question._9BallNumbers] = new()
         {
-            NeedsTranslation = true,
-            QuestionText = "What was the letter of ball {1} in {0}?",
+            QuestionText = "{0}\uE47F.Balls[{1}]",
+            ModuleName = "GSNineBall",
         },
 
         // Abyss
@@ -240,8 +240,8 @@ public class Translation_csharp : TranslationBase<TranslationInfo>
         // What was the first character displayed on Abyss?
         [Question.AbyssSeed] = new()
         {
-            NeedsTranslation = true,
-            QuestionText = "What was the {1} character displayed on {0}?",
+            QuestionText = "{0}\uE47F.display{1}",
+            ModuleName = "GSAbyss",
         },
 
         // Accumulation
@@ -249,40 +249,40 @@ public class Translation_csharp : TranslationBase<TranslationInfo>
         // What was the background color on the first stage in Accumulation?
         [Question.AccumulationBackgroundColor] = new()
         {
-            NeedsTranslation = true,
-            QuestionText = "What was the background color on the {1} stage in {0}?",
+            QuestionText = "{0}\uE47F.stages{1}.background",
+            ModuleName = "accumulation",
             Answers = new Dictionary<string, string>
             {
-                ["Blue"] = "Blue",
-                ["Brown"] = "Brown",
-                ["Green"] = "Green",
-                ["Grey"] = "Grey",
-                ["Lime"] = "Lime",
-                ["Orange"] = "Orange",
-                ["Pink"] = "Pink",
-                ["Red"] = "Red",
-                ["White"] = "White",
-                ["Yellow"] = "Yellow",
+                ["Blue"] = "Color.Blue",
+                ["Brown"] = "Color.Brown",
+                ["Green"] = "Color.Green",
+                ["Grey"] = "Color.Grey",
+                ["Lime"] = "Color.Lime",
+                ["Orange"] = "Color.Orange",
+                ["Pink"] = "Color.Pink",
+                ["Red"] = "Color.Red",
+                ["White"] = "Color.White",
+                ["Yellow"] = "Color.Yellow",
             },
         },
         // What was the border color in {0}?
         // What was the border color in Accumulation?
         [Question.AccumulationBorderColor] = new()
         {
-            NeedsTranslation = true,
-            QuestionText = "What was the border color in {0}?",
+            QuestionText = "{0}\uE47F.border",
+            ModuleName = "accumulation",
             Answers = new Dictionary<string, string>
             {
-                ["Blue"] = "Blue",
-                ["Brown"] = "Brown",
-                ["Green"] = "Green",
-                ["Grey"] = "Grey",
-                ["Lime"] = "Lime",
-                ["Orange"] = "Orange",
-                ["Pink"] = "Pink",
-                ["Red"] = "Red",
-                ["White"] = "White",
-                ["Yellow"] = "Yellow",
+                ["Blue"] = "Color.Blue",
+                ["Brown"] = "Color.Brown",
+                ["Green"] = "Color.Green",
+                ["Grey"] = "Color.Grey",
+                ["Lime"] = "Color.Lime",
+                ["Orange"] = "Color.Orange",
+                ["Pink"] = "Color.Pink",
+                ["Red"] = "Color.Red",
+                ["White"] = "Color.White",
+                ["Yellow"] = "Color.Yellow",
             },
         },
 
@@ -291,15 +291,15 @@ public class Translation_csharp : TranslationBase<TranslationInfo>
         // Which item was the first correct item you used in Adventure Game?
         [Question.AdventureGameCorrectItem] = new()
         {
-            NeedsTranslation = true,
-            QuestionText = "Which item was the {1} correct item you used in {0}?",
+            QuestionText = "{0}\uE47F.itemsUsed{1}",
+            ModuleName = "spwizAdventureGame",
         },
         // What enemy were you fighting in {0}?
         // What enemy were you fighting in Adventure Game?
         [Question.AdventureGameEnemy] = new()
         {
-            NeedsTranslation = true,
-            QuestionText = "What enemy were you fighting in {0}?",
+            QuestionText = "{0}\uE47F.enemy",
+            ModuleName = "spwizAdventureGame",
         },
 
         // Affine Cycle
@@ -307,15 +307,15 @@ public class Translation_csharp : TranslationBase<TranslationInfo>
         // Which direction was the first dial pointing in Affine Cycle?
         [Question.AffineCycleDialDirections] = new()
         {
-            NeedsTranslation = true,
-            QuestionText = "Which direction was the {1} dial pointing in {0}?",
+            QuestionText = "{0}\uE47F.dials{1}\uE47F.direction",
+            ModuleName = "affineCycle",
         },
         // What letter was written on the {1} dial in {0}?
         // What letter was written on the first dial in Affine Cycle?
         [Question.AffineCycleDialLabels] = new()
         {
-            NeedsTranslation = true,
-            QuestionText = "What letter was written on the {1} dial in {0}?",
+            QuestionText = "{0}\uE47F.dials{1}\uE47F.letter",
+            ModuleName = "affineCycle",
         },
 
         // Alcoholic Rampage
@@ -323,8 +323,8 @@ public class Translation_csharp : TranslationBase<TranslationInfo>
         // Who was the first mercenary displayed in Alcoholic Rampage?
         [Question.AlcoholicRampageMercenaries] = new()
         {
-            NeedsTranslation = true,
-            QuestionText = "Who was the {1} mercenary displayed in {0}?",
+            QuestionText = "{0}\uE47F.mercenaries{1}",
+            ModuleName = "alcoholicRampageModule",
         },
 
         // A Letter
@@ -332,8 +332,8 @@ public class Translation_csharp : TranslationBase<TranslationInfo>
         // What was the initial letter in A Letter?
         [Question.ALetterInitialLetter] = new()
         {
-            NeedsTranslation = true,
-            QuestionText = "What was the initial letter in {0}?",
+            QuestionText = "{0}\uE47F.initialLetter",
+            ModuleName = "LetterModule",
         },
 
         // Alfa-Bravo
@@ -341,29 +341,29 @@ public class Translation_csharp : TranslationBase<TranslationInfo>
         // Which letter was pressed in Alfa-Bravo?
         [Question.AlfaBravoPressedLetter] = new()
         {
-            NeedsTranslation = true,
-            QuestionText = "Which letter was pressed in {0}?",
+            QuestionText = "{0}\uE47F.pressedLetter",
+            ModuleName = "alfa_bravo",
         },
         // Which letter was to the left of the pressed one in {0}?
         // Which letter was to the left of the pressed one in Alfa-Bravo?
         [Question.AlfaBravoLeftPressedLetter] = new()
         {
-            NeedsTranslation = true,
-            QuestionText = "Which letter was to the left of the pressed one in {0}?",
+            QuestionText = "{0}\uE47F.letters[{0}\uE47F.pressed + 1]",
+            ModuleName = "alfa_bravo",
         },
         // Which letter was to the right of the pressed one in {0}?
         // Which letter was to the right of the pressed one in Alfa-Bravo?
         [Question.AlfaBravoRightPressedLetter] = new()
         {
-            NeedsTranslation = true,
-            QuestionText = "Which letter was to the right of the pressed one in {0}?",
+            QuestionText = "{0}\uE47F.letters[{0}\uE47F.pressed - 1]",
+            ModuleName = "alfa_bravo",
         },
         // What was the last digit on the small display in {0}?
         // What was the last digit on the small display in Alfa-Bravo?
         [Question.AlfaBravoDigit] = new()
         {
-            NeedsTranslation = true,
-            QuestionText = "What was the last digit on the small display in {0}?",
+            QuestionText = "{0}\uE47F.smallDisplay.Last()",
+            ModuleName = "alfa_bravo",
         },
 
         // Algebra
@@ -371,15 +371,15 @@ public class Translation_csharp : TranslationBase<TranslationInfo>
         // What was the first equation in Algebra?
         [Question.AlgebraEquation1] = new()
         {
-            NeedsTranslation = true,
-            QuestionText = "What was the first equation in {0}?",
+            QuestionText = "{0}\uE47F.equations.First()",
+            ModuleName = "algebra",
         },
         // What was the second equation in {0}?
         // What was the second equation in Algebra?
         [Question.AlgebraEquation2] = new()
         {
-            NeedsTranslation = true,
-            QuestionText = "What was the second equation in {0}?",
+            QuestionText = "{0}\uE47F.equations[1]",
+            ModuleName = "algebra",
         },
 
         // Algorithmia
@@ -387,11 +387,11 @@ public class Translation_csharp : TranslationBase<TranslationInfo>
         // Which position was the starting position in Algorithmia?
         [Question.AlgorithmiaPositions] = new()
         {
-            NeedsTranslation = true,
-            QuestionText = "Which position was the {1} position in {0}?",
+            QuestionText = "{0}\uE47F.{1}",
+            ModuleName = "algorithmia",
             FormatArgs = new Dictionary<string, string>
             {
-                ["starting"] = "starting",
+                ["starting"] = "start",
                 ["goal"] = "goal",
             },
         },
@@ -399,15 +399,15 @@ public class Translation_csharp : TranslationBase<TranslationInfo>
         // What was the color of the colored bulb in Algorithmia?
         [Question.AlgorithmiaColor] = new()
         {
-            NeedsTranslation = true,
-            QuestionText = "What was the color of the colored bulb in {0}?",
+            QuestionText = "{0}\uE47F.bulbColor",
+            ModuleName = "algorithmia",
         },
         // Which number was present in the seed in {0}?
         // Which number was present in the seed in Algorithmia?
         [Question.AlgorithmiaSeed] = new()
         {
-            NeedsTranslation = true,
-            QuestionText = "Which number was present in the seed in {0}?",
+            QuestionText = "{0}\uE47F.seed",
+            ModuleName = "algorithmia",
         },
 
         // Alphabetical Ruling
@@ -415,15 +415,15 @@ public class Translation_csharp : TranslationBase<TranslationInfo>
         // What was the letter displayed in the first stage of Alphabetical Ruling?
         [Question.AlphabeticalRulingLetter] = new()
         {
-            NeedsTranslation = true,
-            QuestionText = "What was the letter displayed in the {1} stage of {0}?",
+            QuestionText = "{0}\uE47F.stages{1}.letter",
+            ModuleName = "alphabeticalRuling",
         },
         // What was the number displayed in the {1} stage of {0}?
         // What was the number displayed in the first stage of Alphabetical Ruling?
         [Question.AlphabeticalRulingNumber] = new()
         {
-            NeedsTranslation = true,
-            QuestionText = "What was the number displayed in the {1} stage of {0}?",
+            QuestionText = "{0}\uE47F.stages{1}.number",
+            ModuleName = "alphabeticalRuling",
         },
 
         // Alphabet Numbers
@@ -479,8 +479,8 @@ public class Translation_csharp : TranslationBase<TranslationInfo>
         // Which ride was available in Amusement Parks?
         [Question.AmusementParksRides] = new()
         {
-            NeedsTranslation = true,
-            QuestionText = "Which ride was available in {0}?",
+            QuestionText = "{0}\uE47F.availableRides",
+            ModuleName = "amusementParks",
         },
 
         // Ángel Hernández
@@ -488,8 +488,8 @@ public class Translation_csharp : TranslationBase<TranslationInfo>
         // What letter was shown by the raised buttons on the first stage on Ángel Hernández?
         [Question.AngelHernandezMainLetter] = new()
         {
-            NeedsTranslation = true,
-            QuestionText = "What letter was shown by the raised buttons on the {1} stage on {0}?",
+            QuestionText = "{0}\uE47F.stages{1}\uE47F.raisedLetter",
+            ModuleName = "AngelHernandezModule",
         },
 
         // The Arena
@@ -497,22 +497,22 @@ public class Translation_csharp : TranslationBase<TranslationInfo>
         // What was the maximum weapon damage of the attack phase in The Arena?
         [Question.ArenaDamage] = new()
         {
-            NeedsTranslation = true,
-            QuestionText = "What was the maximum weapon damage of the attack phase in {0}?",
+            QuestionText = "{0}\uE47F.attack\uE47F.maximumWeaponDamage",
+            ModuleName = "TheArena",
         },
         // Which enemy was present in the defend phase of {0}?
         // Which enemy was present in the defend phase of The Arena?
         [Question.ArenaEnemies] = new()
         {
-            NeedsTranslation = true,
-            QuestionText = "Which enemy was present in the defend phase of {0}?",
+            QuestionText = "{0}\uE47F.defend\uE47F.enemy",
+            ModuleName = "TheArena",
         },
         // Which was a number present in the grab phase of {0}?
         // Which was a number present in the grab phase of The Arena?
         [Question.ArenaNumbers] = new()
         {
-            NeedsTranslation = true,
-            QuestionText = "Which was a number present in the grab phase of {0}?",
+            QuestionText = "{0}\uE47F.grab\uE47F.numbers",
+            ModuleName = "TheArena",
         },
 
         // Arithmelogic
@@ -520,20 +520,20 @@ public class Translation_csharp : TranslationBase<TranslationInfo>
         // What was the symbol on the submit button in Arithmelogic?
         [Question.ArithmelogicSubmit] = new()
         {
-            NeedsTranslation = true,
-            QuestionText = "What was the symbol on the submit button in {0}?",
+            QuestionText = "{0}\uE47F.submit",
+            ModuleName = "arithmelogic",
         },
         // Which number was selectable, but not the solution, in the {1} screen on {0}?
         // Which number was selectable, but not the solution, in the left screen on Arithmelogic?
         [Question.ArithmelogicNumbers] = new()
         {
-            NeedsTranslation = true,
-            QuestionText = "Which number was selectable, but not the solution, in the {1} screen on {0}?",
+            QuestionText = "{0}\uE47F.screens[{1}].Except([{0}\uE47F.solutions[{1}]])",
+            ModuleName = "arithmelogic",
             FormatArgs = new Dictionary<string, string>
             {
-                ["left"] = "left",
-                ["middle"] = "middle",
-                ["right"] = "right",
+                ["left"] = "0",
+                ["middle"] = "1",
+                ["right"] = "2",
             },
         },
 
@@ -542,8 +542,8 @@ public class Translation_csharp : TranslationBase<TranslationInfo>
         // What was the first character displayed on ASCII Maze?
         [Question.ASCIIMazeCharacters] = new()
         {
-            NeedsTranslation = true,
-            QuestionText = "What was the {1} character displayed on {0}?",
+            QuestionText = "{0}\uE47F.display{1}",
+            ModuleName = "asciiMaze",
         },
 
         // A Square
@@ -551,15 +551,15 @@ public class Translation_csharp : TranslationBase<TranslationInfo>
         // Which of these was an index color in A Square?
         [Question.ASquareIndexColors] = new()
         {
-            NeedsTranslation = true,
-            QuestionText = "Which of these was an index color in {0}?",
+            QuestionText = "{0}\uE47F.indexColors",
+            ModuleName = "ASquareModule",
         },
         // Which color was submitted {1} in {0}?
         // Which color was submitted first in A Square?
         [Question.ASquareCorrectColors] = new()
         {
-            NeedsTranslation = true,
-            QuestionText = "Which color was submitted {1} in {0}?",
+            QuestionText = "{0}\uE47F.submissions{1}",
+            ModuleName = "ASquareModule",
         },
 
         // Audio Morse
@@ -567,8 +567,8 @@ public class Translation_csharp : TranslationBase<TranslationInfo>
         // What was signaled in Audio Morse?
         [Question.AudioMorseSound] = new()
         {
-            NeedsTranslation = true,
-            QuestionText = "What was signaled in {0}?",
+            QuestionText = "{0}\uE47F.signal",
+            ModuleName = "lgndAudioMorse",
         },
 
         // The Azure Button
@@ -652,8 +652,8 @@ public class Translation_csharp : TranslationBase<TranslationInfo>
         // Which menu item was present in Bakery?
         [Question.BakeryItems] = new()
         {
-            NeedsTranslation = true,
-            QuestionText = "Which menu item was present in {0}?",
+            QuestionText = "{0}\uE47F.menuItems",
+            ModuleName = "bakery",
         },
 
         // Bamboozled Again
@@ -661,70 +661,70 @@ public class Translation_csharp : TranslationBase<TranslationInfo>
         // What color was the first correct button in Bamboozled Again?
         [Question.BamboozledAgainButtonColor] = new()
         {
-            NeedsTranslation = true,
-            QuestionText = "What color was the {1} correct button in {0}?",
+            QuestionText = "{0}\uE47F.correctButtons{1}\uE47F.color",
+            ModuleName = "bamboozledAgain",
             Answers = new Dictionary<string, string>
             {
-                ["Red"] = "Red",
-                ["Orange"] = "Orange",
-                ["Yellow"] = "Yellow",
-                ["Lime"] = "Lime",
-                ["Green"] = "Green",
-                ["Jade"] = "Jade",
-                ["Cyan"] = "Cyan",
-                ["Azure"] = "Azure",
-                ["Blue"] = "Blue",
-                ["Violet"] = "Violet",
-                ["Magenta"] = "Magenta",
-                ["Rose"] = "Rose",
-                ["White"] = "White",
-                ["Grey"] = "Grey",
-                ["Black"] = "Black",
+                ["Red"] = "Color.Red",
+                ["Orange"] = "Color.Orange",
+                ["Yellow"] = "Color.Yellow",
+                ["Lime"] = "Color.Lime",
+                ["Green"] = "Color.Green",
+                ["Jade"] = "Color.Jade",
+                ["Cyan"] = "Color.Cyan",
+                ["Azure"] = "Color.Azure",
+                ["Blue"] = "Color.Blue",
+                ["Violet"] = "Color.Violet",
+                ["Magenta"] = "Color.Magenta",
+                ["Rose"] = "Color.Rose",
+                ["White"] = "Color.White",
+                ["Grey"] = "Color.Grey",
+                ["Black"] = "Color.Black",
             },
         },
         // What was the text on the {1} correct button in {0}?
         // What was the text on the first correct button in Bamboozled Again?
         [Question.BamboozledAgainButtonText] = new()
         {
-            NeedsTranslation = true,
-            QuestionText = "What was the text on the {1} correct button in {0}?",
+            QuestionText = "{0}\uE47F.correctButtons{1}\uE47F.text",
+            ModuleName = "bamboozledAgain",
         },
         // What was the {1} decrypted text on the display in {0}?
         // What was the first decrypted text on the display in Bamboozled Again?
         [Question.BamboozledAgainDisplayTexts1] = new()
         {
-            NeedsTranslation = true,
-            QuestionText = "What was the {1} decrypted text on the display in {0}?",
+            QuestionText = "{0}\uE47F.displays{1}\uE47F.text",
+            ModuleName = "bamboozledAgain",
         },
         // What was the {1} decrypted text on the display in {0}?
         // What was the first decrypted text on the display in Bamboozled Again?
         [Question.BamboozledAgainDisplayTexts2] = new()
         {
-            NeedsTranslation = true,
-            QuestionText = "What was the {1} decrypted text on the display in {0}?",
+            QuestionText = "{0}\uE47F.displays{1}\uE47F.text",
+            ModuleName = "bamboozledAgain",
         },
         // What color was the {1} text on the display in {0}?
         // What color was the first text on the display in Bamboozled Again?
         [Question.BamboozledAgainDisplayColor] = new()
         {
-            NeedsTranslation = true,
-            QuestionText = "What color was the {1} text on the display in {0}?",
+            QuestionText = "{0}\uE47F.displays{1}\uE47F.color",
+            ModuleName = "bamboozledAgain",
             Answers = new Dictionary<string, string>
             {
-                ["Red"] = "Red",
-                ["Orange"] = "Orange",
-                ["Yellow"] = "Yellow",
-                ["Lime"] = "Lime",
-                ["Green"] = "Green",
-                ["Jade"] = "Jade",
-                ["Cyan"] = "Cyan",
-                ["Azure"] = "Azure",
-                ["Blue"] = "Blue",
-                ["Violet"] = "Violet",
-                ["Magenta"] = "Magenta",
-                ["Rose"] = "Rose",
-                ["White"] = "White",
-                ["Grey"] = "Grey",
+                ["Red"] = "Color.Red",
+                ["Orange"] = "Color.Orange",
+                ["Yellow"] = "Color.Yellow",
+                ["Lime"] = "Color.Lime",
+                ["Green"] = "Color.Green",
+                ["Jade"] = "Color.Jade",
+                ["Cyan"] = "Color.Cyan",
+                ["Azure"] = "Color.Azure",
+                ["Blue"] = "Color.Blue",
+                ["Violet"] = "Color.Violet",
+                ["Magenta"] = "Color.Magenta",
+                ["Rose"] = "Color.Rose",
+                ["White"] = "Color.White",
+                ["Grey"] = "Color.Grey",
             },
         },
 
@@ -733,68 +733,68 @@ public class Translation_csharp : TranslationBase<TranslationInfo>
         // What color was the button in the first stage of Bamboozling Button?
         [Question.BamboozlingButtonColor] = new()
         {
-            NeedsTranslation = true,
-            QuestionText = "What color was the button in the {1} stage of {0}?",
+            QuestionText = "{0}\uE47F.stages{1}\uE47F.buttonColor",
+            ModuleName = "bamboozlingButton",
             Answers = new Dictionary<string, string>
             {
-                ["Red"] = "Red",
-                ["Orange"] = "Orange",
-                ["Yellow"] = "Yellow",
-                ["Lime"] = "Lime",
-                ["Green"] = "Green",
-                ["Jade"] = "Jade",
-                ["Cyan"] = "Cyan",
-                ["Azure"] = "Azure",
-                ["Blue"] = "Blue",
-                ["Violet"] = "Violet",
-                ["Magenta"] = "Magenta",
-                ["Rose"] = "Rose",
-                ["White"] = "White",
-                ["Grey"] = "Grey",
-                ["Black"] = "Black",
+                ["Red"] = "Color.Red",
+                ["Orange"] = "Color.Orange",
+                ["Yellow"] = "Color.Yellow",
+                ["Lime"] = "Color.Lime",
+                ["Green"] = "Color.Green",
+                ["Jade"] = "Color.Jade",
+                ["Cyan"] = "Color.Cyan",
+                ["Azure"] = "Color.Azure",
+                ["Blue"] = "Color.Blue",
+                ["Violet"] = "Color.Violet",
+                ["Magenta"] = "Color.Magenta",
+                ["Rose"] = "Color.Rose",
+                ["White"] = "Color.White",
+                ["Grey"] = "Color.Grey",
+                ["Black"] = "Color.Black",
             },
         },
         // What was the {2} label on the button in the {1} stage of {0}?
         // What was the top label on the button in the first stage of Bamboozling Button?
         [Question.BamboozlingButtonLabel] = new()
         {
-            NeedsTranslation = true,
-            QuestionText = "What was the {2} label on the button in the {1} stage of {0}?",
+            QuestionText = "{0}\uE47F.stages{1}\uE47F.buttonLabels[{2}]",
+            ModuleName = "bamboozlingButton",
             FormatArgs = new Dictionary<string, string>
             {
-                ["top"] = "top",
-                ["bottom"] = "bottom",
+                ["top"] = "0",
+                ["bottom"] = "1",
             },
         },
         // What was the {2} display in the {1} stage of {0}?
         // What was the first display in the first stage of Bamboozling Button?
         [Question.BamboozlingButtonDisplay] = new()
         {
-            NeedsTranslation = true,
-            QuestionText = "What was the {2} display in the {1} stage of {0}?",
+            QuestionText = "{0}\uE47F.stages{1}\uE47F.displays{2}\uE47F.text",
+            ModuleName = "bamboozlingButton",
         },
         // What was the color of the {2} display in the {1} stage of {0}?
         // What was the color of the first display in the first stage of Bamboozling Button?
         [Question.BamboozlingButtonDisplayColor] = new()
         {
-            NeedsTranslation = true,
-            QuestionText = "What was the color of the {2} display in the {1} stage of {0}?",
+            QuestionText = "{0}\uE47F.stages{1}\uE47F.displays{2}\uE47F.color",
+            ModuleName = "bamboozlingButton",
             Answers = new Dictionary<string, string>
             {
-                ["Red"] = "Red",
-                ["Orange"] = "Orange",
-                ["Yellow"] = "Yellow",
-                ["Lime"] = "Lime",
-                ["Green"] = "Green",
-                ["Jade"] = "Jade",
-                ["Cyan"] = "Cyan",
-                ["Azure"] = "Azure",
-                ["Blue"] = "Blue",
-                ["Violet"] = "Violet",
-                ["Magenta"] = "Magenta",
-                ["Rose"] = "Rose",
-                ["White"] = "White",
-                ["Grey"] = "Grey",
+                ["Red"] = "Color.Red",
+                ["Orange"] = "Color.Orange",
+                ["Yellow"] = "Color.Yellow",
+                ["Lime"] = "Color.Lime",
+                ["Green"] = "Color.Green",
+                ["Jade"] = "Color.Jade",
+                ["Cyan"] = "Color.Cyan",
+                ["Azure"] = "Color.Azure",
+                ["Blue"] = "Color.Blue",
+                ["Violet"] = "Color.Violet",
+                ["Magenta"] = "Color.Magenta",
+                ["Rose"] = "Color.Rose",
+                ["White"] = "Color.White",
+                ["Grey"] = "Color.Grey",
             },
         },
 
@@ -803,50 +803,50 @@ public class Translation_csharp : TranslationBase<TranslationInfo>
         // What was the category of Bar Charts?
         [Question.BarChartsCategory] = new()
         {
-            NeedsTranslation = true,
-            QuestionText = "What was the category of {0}?",
+            QuestionText = "{0}\uE47F.category",
+            ModuleName = "GSBarCharts",
         },
         // What was the color of the {1} bar in {0}?
         // What was the color of the first bar in Bar Charts?
         [Question.BarChartsColor] = new()
         {
-            NeedsTranslation = true,
-            QuestionText = "What was the color of the {1} bar in {0}?",
+            QuestionText = "{0}\uE47F.bars{1}\uE47F.color",
+            ModuleName = "GSBarCharts",
             Answers = new Dictionary<string, string>
             {
-                ["Red"] = "Red",
-                ["Yellow"] = "Yellow",
-                ["Green"] = "Green",
-                ["Blue"] = "Blue",
+                ["Red"] = "Color.Red",
+                ["Yellow"] = "Color.Yellow",
+                ["Green"] = "Color.Green",
+                ["Blue"] = "Color.Blue",
             },
         },
         // What was the position of the {1} bar in {0}?
         // What was the position of the shortest bar in Bar Charts?
         [Question.BarChartsHeight] = new()
         {
-            NeedsTranslation = true,
-            QuestionText = "What was the position of the {1} bar in {0}?",
+            QuestionText = "{0}\uE47F.bars\uE47F.SingleIndexOf(b => b.height is {1})",
+            ModuleName = "GSBarCharts",
             FormatArgs = new Dictionary<string, string>
             {
-                ["shortest"] = "shortest",
-                ["second shortest"] = "second shortest",
-                ["second tallest"] = "second tallest",
-                ["tallest"] = "tallest",
+                ["shortest"] = "0",
+                ["second shortest"] = "1",
+                ["second tallest"] = "2",
+                ["tallest"] = "3",
             },
         },
         // What was the label of the {1} bar in {0}?
         // What was the label of the first bar in Bar Charts?
         [Question.BarChartsLabel] = new()
         {
-            NeedsTranslation = true,
-            QuestionText = "What was the label of the {1} bar in {0}?",
+            QuestionText = "{0}\uE47F.bars{1}.label",
+            ModuleName = "GSBarCharts",
         },
         // What was the unit of {0}?
         // What was the unit of Bar Charts?
         [Question.BarChartsUnit] = new()
         {
-            NeedsTranslation = true,
-            QuestionText = "What was the unit of {0}?",
+            QuestionText = "{0}\uE47F.unit",
+            ModuleName = "GSBarCharts",
         },
 
         // Barcode Cipher
@@ -854,33 +854,33 @@ public class Translation_csharp : TranslationBase<TranslationInfo>
         // What was the screen number in Barcode Cipher?
         [Question.BarcodeCipherScreenNumber] = new()
         {
-            NeedsTranslation = true,
-            QuestionText = "What was the screen number in {0}?",
+            QuestionText = "{0}\uE47F.number",
+            ModuleName = "BarcodeCipherModule",
         },
         // What was the edgework represented by the {1} barcode in {0}?
         // What was the edgework represented by the first barcode in Barcode Cipher?
         [Question.BarcodeCipherBarcodeEdgework] = new()
         {
-            NeedsTranslation = true,
-            QuestionText = "What was the edgework represented by the {1} barcode in {0}?",
+            QuestionText = "{0}\uE47F.barcodes{1}\uE47F.edgework",
+            ModuleName = "BarcodeCipherModule",
             Answers = new Dictionary<string, string>
             {
-                ["SERIAL NUMBER"] = "SERIAL NUMBER",
-                ["BATTERIES"] = "BATTERIES",
-                ["BATTERY HOLDERS"] = "BATTERY HOLDERS",
-                ["PORTS"] = "PORTS",
-                ["PORT PLATES"] = "PORT PLATES",
-                ["LIT INDICATORS"] = "LIT INDICATORS",
-                ["UNLIT INDICATORS"] = "UNLIT INDICATORS",
-                ["INDICATORS"] = "INDICATORS",
+                ["SERIAL NUMBER"] = "Edgework.SerialNumber",
+                ["BATTERIES"] = "Edgework.Batteries",
+                ["BATTERY HOLDERS"] = "Edgework.BatteryHolders",
+                ["PORTS"] = "Edgework.Ports",
+                ["PORT PLATES"] = "Edgework.PortPlates",
+                ["LIT INDICATORS"] = "Edgework.LitIndicators",
+                ["UNLIT INDICATORS"] = "Edgework.UnlitIndicators",
+                ["INDICATORS"] = "Edgework.Indicators",
             },
         },
         // What was the answer for the {1} barcode in {0}?
         // What was the answer for the first barcode in Barcode Cipher?
         [Question.BarcodeCipherBarcodeAnswers] = new()
         {
-            NeedsTranslation = true,
-            QuestionText = "What was the answer for the {1} barcode in {0}?",
+            QuestionText = "{0}\uE47F.barcodes{1}\uE47F.solution",
+            ModuleName = "BarcodeCipherModule",
         },
 
         // Bartending
@@ -888,15 +888,15 @@ public class Translation_csharp : TranslationBase<TranslationInfo>
         // Which ingredient was in the first position on Bartending?
         [Question.BartendingIngredients] = new()
         {
-            NeedsTranslation = true,
-            QuestionText = "Which ingredient was in the {1} position on {0}?",
+            QuestionText = "{0}\uE47F.slots{1}\uE47F.ingredient",
+            ModuleName = "BartendingModule",
             Answers = new Dictionary<string, string>
             {
-                ["Adelhyde"] = "Adelhyde",
-                ["Flanergide"] = "Flanergide",
-                ["Bronson Extract"] = "Bronson Extract",
-                ["Karmotrine"] = "Karmotrine",
-                ["Powdered Delta"] = "Powdered Delta",
+                ["Adelhyde"] = "Ingredient.Adelhyde",
+                ["Flanergide"] = "Ingredient.Flanergide",
+                ["Bronson Extract"] = "Ingredient.BronsonExtract",
+                ["Karmotrine"] = "Ingredient.Karmotrine",
+                ["Powdered Delta"] = "Ingredient.PowderedDelta",
             },
         },
 
@@ -905,16 +905,16 @@ public class Translation_csharp : TranslationBase<TranslationInfo>
         // What was this bean in Beans?
         [Question.BeansColors] = new()
         {
-            NeedsTranslation = true,
-            QuestionText = "What was this bean in {0}?",
+            QuestionText = "[{0}\uE47F.beans[value]\uE47F.isWobbly, {0}\uE47F.beans[value]\uE47F.color]",
+            ModuleName = "beans",
             Answers = new Dictionary<string, string>
             {
-                ["Wobbly Orange"] = "Wobbly Orange",
-                ["Wobbly Yellow"] = "Wobbly Yellow",
-                ["Wobbly Green"] = "Wobbly Green",
-                ["Not Wobbly Orange"] = "Not Wobbly Orange",
-                ["Not Wobbly Yellow"] = "Not Wobbly Yellow",
-                ["Not Wobbly Green"] = "Not Wobbly Green",
+                ["Wobbly Orange"] = "[true, Color.Orange]",
+                ["Wobbly Yellow"] = "[true, Color.Yellow]",
+                ["Wobbly Green"] = "[true, Color.Green]",
+                ["Not Wobbly Orange"] = "[false, Color.Orange]",
+                ["Not Wobbly Yellow"] = "[false, Color.Yellow]",
+                ["Not Wobbly Green"] = "[false, Color.Green]",
             },
         },
 
@@ -923,28 +923,28 @@ public class Translation_csharp : TranslationBase<TranslationInfo>
         // What was sprout 1 in Bean Sprouts?
         [Question.BeanSproutsColors] = new()
         {
-            NeedsTranslation = true,
-            QuestionText = "What was sprout {1} in {0}?",
+            QuestionText = "{0}\uE47F.sprouts[{1}].status",
+            ModuleName = "beanSprouts",
             Answers = new Dictionary<string, string>
             {
-                ["Raw"] = "Raw",
-                ["Cooked"] = "Cooked",
-                ["Burnt"] = "Burnt",
-                ["Fake"] = "Fake",
+                ["Raw"] = "Status.Raw",
+                ["Cooked"] = "Status.Cooked",
+                ["Burnt"] = "Status.Burnt",
+                ["Fake"] = "Status.Fake",
             },
         },
         // What bean was on sprout {1} in {0}?
         // What bean was on sprout 1 in Bean Sprouts?
         [Question.BeanSproutsBeans] = new()
         {
-            NeedsTranslation = true,
-            QuestionText = "What bean was on sprout {1} in {0}?",
+            QuestionText = "{0}\uE47F.sprouts[{1}]\uE47F.bean",
+            ModuleName = "beanSprouts",
             Answers = new Dictionary<string, string>
             {
-                ["Left"] = "Left",
-                ["Right"] = "Right",
-                ["None"] = "None",
-                ["Both"] = "Both",
+                ["Left"] = "Position.Left",
+                ["Right"] = "Position.Right",
+                ["None"] = "Position.None",
+                ["Both"] = "Position.Both",
             },
         },
 
@@ -953,16 +953,16 @@ public class Translation_csharp : TranslationBase<TranslationInfo>
         // What was the bean in Big Bean?
         [Question.BigBeanColor] = new()
         {
-            NeedsTranslation = true,
-            QuestionText = "What was the bean in {0}?",
+            QuestionText = "[{0}\uE47F.isWobbly, {0}\uE47F.color]",
+            ModuleName = "bigBean",
             Answers = new Dictionary<string, string>
             {
-                ["Wobbly Orange"] = "Wobbly Orange",
-                ["Wobbly Yellow"] = "Wobbly Yellow",
-                ["Wobbly Green"] = "Wobbly Green",
-                ["Not Wobbly Orange"] = "Not Wobbly Orange",
-                ["Not Wobbly Yellow"] = "Not Wobbly Yellow",
-                ["Not Wobbly Green"] = "Not Wobbly Green",
+                ["Wobbly Orange"] = "[true, Color.Orange]",
+                ["Wobbly Yellow"] = "[true, Color.Yellow]",
+                ["Wobbly Green"] = "[true, Color.Green]",
+                ["Not Wobbly Orange"] = "[false, Color.Orange]",
+                ["Not Wobbly Yellow"] = "[false, Color.Yellow]",
+                ["Not Wobbly Green"] = "[false, Color.Green]",
             },
         },
 
@@ -1086,13 +1086,13 @@ public class Translation_csharp : TranslationBase<TranslationInfo>
         // What was on the top screen on page 1 in Black Cipher?
         [Question.BlackCipherScreen] = new()
         {
-            NeedsTranslation = true,
-            QuestionText = "What was on the {1} screen on page {2} in {0}?",
+            QuestionText = "{0}\uE47F.screens{1}\uE47F.pages[{2}]",
+            ModuleName = "blackCipher",
             FormatArgs = new Dictionary<string, string>
             {
-                ["top"] = "top",
-                ["middle"] = "middle",
-                ["bottom"] = "bottom",
+                ["top"] = "0",
+                ["middle"] = "1",
+                ["bottom"] = "2",
             },
         },
 
@@ -1277,13 +1277,13 @@ public class Translation_csharp : TranslationBase<TranslationInfo>
         // What was on the top screen on page 1 in Blue Cipher?
         [Question.BlueCipherScreen] = new()
         {
-            NeedsTranslation = true,
-            QuestionText = "What was on the {1} screen on page {2} in {0}?",
+            QuestionText = "{0}\uE47F.screens{1}\uE47F.pages[{2}]",
+            ModuleName = "blueCipher",
             FormatArgs = new Dictionary<string, string>
             {
-                ["top"] = "top",
-                ["middle"] = "middle",
-                ["bottom"] = "bottom",
+                ["top"] = "0",
+                ["middle"] = "1",
+                ["bottom"] = "2",
             },
         },
 
@@ -1560,13 +1560,13 @@ public class Translation_csharp : TranslationBase<TranslationInfo>
         // What was on the top screen on page 1 in Brown Cipher?
         [Question.BrownCipherScreen] = new()
         {
-            NeedsTranslation = true,
-            QuestionText = "What was on the {1} screen on page {2} in {0}?",
+            QuestionText = "{0}\uE47F.screens{1}\uE47F.pages[{2}]",
+            ModuleName = "brownCipher",
             FormatArgs = new Dictionary<string, string>
             {
-                ["top"] = "top",
-                ["middle"] = "middle",
-                ["bottom"] = "bottom",
+                ["top"] = "0",
+                ["middle"] = "1",
+                ["bottom"] = "2",
             },
         },
 
@@ -2512,13 +2512,13 @@ public class Translation_csharp : TranslationBase<TranslationInfo>
         // What was on the top screen on page 1 in Coral Cipher?
         [Question.CoralCipherScreen] = new()
         {
-            NeedsTranslation = true,
-            QuestionText = "What was on the {1} screen on page {2} in {0}?",
+            QuestionText = "{0}\uE47F.screens{1}\uE47F.pages[{2}]",
+            ModuleName = "coralCipher",
             FormatArgs = new Dictionary<string, string>
             {
-                ["top"] = "top",
-                ["middle"] = "middle",
-                ["bottom"] = "bottom",
+                ["top"] = "0",
+                ["middle"] = "1",
+                ["bottom"] = "2",
             },
         },
 
@@ -2564,13 +2564,13 @@ public class Translation_csharp : TranslationBase<TranslationInfo>
         // What was on the top screen on page 1 in Cornflower Cipher?
         [Question.CornflowerCipherScreen] = new()
         {
-            NeedsTranslation = true,
-            QuestionText = "What was on the {1} screen on page {2} in {0}?",
+            QuestionText = "{0}\uE47F.screens{1}\uE47F.pages[{2}]",
+            ModuleName = "cornflowerCipher",
             FormatArgs = new Dictionary<string, string>
             {
-                ["top"] = "top",
-                ["middle"] = "middle",
-                ["bottom"] = "bottom",
+                ["top"] = "0",
+                ["middle"] = "1",
+                ["bottom"] = "2",
             },
         },
 
@@ -2611,13 +2611,13 @@ public class Translation_csharp : TranslationBase<TranslationInfo>
         // What was on the top screen on page 1 in Cream Cipher?
         [Question.CreamCipherScreen] = new()
         {
-            NeedsTranslation = true,
-            QuestionText = "What was on the {1} screen on page {2} in {0}?",
+            QuestionText = "{0}\uE47F.screens{1}\uE47F.pages[{2}]",
+            ModuleName = "creamCipher",
             FormatArgs = new Dictionary<string, string>
             {
-                ["top"] = "top",
-                ["middle"] = "middle",
-                ["bottom"] = "bottom",
+                ["top"] = "0",
+                ["middle"] = "1",
+                ["bottom"] = "2",
             },
         },
 
@@ -2643,13 +2643,13 @@ public class Translation_csharp : TranslationBase<TranslationInfo>
         // What was on the top screen on page 1 in Crimson Cipher?
         [Question.CrimsonCipherScreen] = new()
         {
-            NeedsTranslation = true,
-            QuestionText = "What was on the {1} screen on page {2} in {0}?",
+            QuestionText = "{0}\uE47F.screens{1}\uE47F.pages[{2}]",
+            ModuleName = "crimsonCipher",
             FormatArgs = new Dictionary<string, string>
             {
-                ["top"] = "top",
-                ["middle"] = "middle",
-                ["bottom"] = "bottom",
+                ["top"] = "0",
+                ["middle"] = "1",
+                ["bottom"] = "2",
             },
         },
 
@@ -4054,13 +4054,13 @@ public class Translation_csharp : TranslationBase<TranslationInfo>
         // What was on the top screen on page 1 in Forest Cipher?
         [Question.ForestCipherScreen] = new()
         {
-            NeedsTranslation = true,
-            QuestionText = "What was on the {1} screen on page {2} in {0}?",
+            QuestionText = "{0}\uE47F.screens{1}\uE47F.pages[{2}]",
+            ModuleName = "forestCipher",
             FormatArgs = new Dictionary<string, string>
             {
-                ["top"] = "top",
-                ["middle"] = "middle",
-                ["bottom"] = "bottom",
+                ["top"] = "0",
+                ["middle"] = "1",
+                ["bottom"] = "2",
             },
         },
 
@@ -4551,13 +4551,13 @@ public class Translation_csharp : TranslationBase<TranslationInfo>
         // What was on the top screen on page 1 in Gray Cipher?
         [Question.GrayCipherScreen] = new()
         {
-            NeedsTranslation = true,
-            QuestionText = "What was on the {1} screen on page {2} in {0}?",
+            QuestionText = "{0}\uE47F.screens{1}\uE47F.pages[{2}]",
+            ModuleName = "grayCipher",
             FormatArgs = new Dictionary<string, string>
             {
-                ["top"] = "top",
-                ["middle"] = "middle",
-                ["bottom"] = "bottom",
+                ["top"] = "0",
+                ["middle"] = "1",
+                ["bottom"] = "2",
             },
         },
 
@@ -4610,13 +4610,13 @@ public class Translation_csharp : TranslationBase<TranslationInfo>
         // What was on the top screen on page 1 in Green Cipher?
         [Question.GreenCipherScreen] = new()
         {
-            NeedsTranslation = true,
-            QuestionText = "What was on the {1} screen on page {2} in {0}?",
+            QuestionText = "{0}\uE47F.screens{1}\uE47F.pages[{2}]",
+            ModuleName = "greenCipher",
             FormatArgs = new Dictionary<string, string>
             {
-                ["top"] = "top",
-                ["middle"] = "middle",
-                ["bottom"] = "bottom",
+                ["top"] = "0",
+                ["middle"] = "1",
+                ["bottom"] = "2",
             },
         },
 
@@ -5192,13 +5192,13 @@ public class Translation_csharp : TranslationBase<TranslationInfo>
         // What was on the top screen on page 1 in Indigo Cipher?
         [Question.IndigoCipherScreen] = new()
         {
-            NeedsTranslation = true,
-            QuestionText = "What was on the {1} screen on page {2} in {0}?",
+            QuestionText = "{0}\uE47F.screens{1}\uE47F.pages[{2}]",
+            ModuleName = "indigoCipher",
             FormatArgs = new Dictionary<string, string>
             {
-                ["top"] = "top",
-                ["middle"] = "middle",
-                ["bottom"] = "bottom",
+                ["top"] = "0",
+                ["middle"] = "1",
+                ["bottom"] = "2",
             },
         },
 
@@ -6004,13 +6004,13 @@ public class Translation_csharp : TranslationBase<TranslationInfo>
         // What was on the top screen on page 1 in Magenta Cipher?
         [Question.MagentaCipherScreen] = new()
         {
-            NeedsTranslation = true,
-            QuestionText = "What was on the {1} screen on page {2} in {0}?",
+            QuestionText = "{0}\uE47F.screens{1}\uE47F.pages[{2}]",
+            ModuleName = "magentaCipher",
             FormatArgs = new Dictionary<string, string>
             {
-                ["top"] = "top",
-                ["middle"] = "middle",
-                ["bottom"] = "bottom",
+                ["top"] = "0",
+                ["middle"] = "1",
+                ["bottom"] = "2",
             },
         },
 
@@ -6188,13 +6188,13 @@ public class Translation_csharp : TranslationBase<TranslationInfo>
         // What was on the top screen on page 1 in Maroon Cipher?
         [Question.MaroonCipherScreen] = new()
         {
-            NeedsTranslation = true,
-            QuestionText = "What was on the {1} screen on page {2} in {0}?",
+            QuestionText = "{0}\uE47F.screens{1}\uE47F.pages[{2}]",
+            ModuleName = "maroonCipher",
             FormatArgs = new Dictionary<string, string>
             {
-                ["top"] = "top",
-                ["middle"] = "middle",
-                ["bottom"] = "bottom",
+                ["top"] = "0",
+                ["middle"] = "1",
+                ["bottom"] = "2",
             },
         },
 
@@ -6920,8 +6920,8 @@ public class Translation_csharp : TranslationBase<TranslationInfo>
         // Which vowel was missing in \uE001Mssngv Wls\uE002?
         [Question.MssngvWlsMssNgvwL] = new()
         {
-            NeedsTranslation = true,
-            QuestionText = "Which vowel was missing in {0}?",
+            QuestionText = "{0}\uE47F.missingVowel",
+            ModuleName = "\uE001MssngvWls\uE002",
             TranslatableStrings = new Dictionary<string, string> // See translations.md for more information on this question.
             {
                 ["AEIOU"] = "AEIOU",
@@ -8163,13 +8163,13 @@ public class Translation_csharp : TranslationBase<TranslationInfo>
         // What was on the top screen on page 1 in Orange Cipher?
         [Question.OrangeCipherScreen] = new()
         {
-            NeedsTranslation = true,
-            QuestionText = "What was on the {1} screen on page {2} in {0}?",
+            QuestionText = "{0}\uE47F.screens{1}\uE47F.pages[{2}]",
+            ModuleName = "orangeCipher",
             FormatArgs = new Dictionary<string, string>
             {
-                ["top"] = "top",
-                ["middle"] = "middle",
-                ["bottom"] = "bottom",
+                ["top"] = "0",
+                ["middle"] = "1",
+                ["bottom"] = "2",
             },
         },
 
@@ -8396,21 +8396,21 @@ public class Translation_csharp : TranslationBase<TranslationInfo>
         // What was the base colour in The Pentabutton?
         [Question.PentabuttonBaseColor] = new()
         {
-            NeedsTranslation = true,
-            QuestionText = "What was the base colour in {0}?",
+            QuestionText = "{0}\uE47F.baseColour",
+            ModuleName = "GSPentabutton",
             Answers = new Dictionary<string, string>
             {
-                ["Red"] = "Red",
-                ["Orange"] = "Orange",
-                ["Yellow"] = "Yellow",
-                ["Green"] = "Green",
-                ["Blue"] = "Blue",
-                ["Purple"] = "Purple",
-                ["White"] = "White",
+                ["Red"] = "Color.Red",
+                ["Orange"] = "Color.Orange",
+                ["Yellow"] = "Color.Yellow",
+                ["Green"] = "Color.Green",
+                ["Blue"] = "Color.Blue",
+                ["Purple"] = "Color.Purple",
+                ["White"] = "Color.White",
             },
             TranslatableStrings = new Dictionary<string, string> // See translations.md for more information on this question.
             {
-                ["the Pentabutton labelled “{0}”"] = "the Pentabutton labelled “{0}”",
+                ["the Pentabutton labelled “{0}”"] = "modules\uE47F.GSPentabutton.Single(m => m.label is \"{0}\")",
             },
         },
 
@@ -9117,13 +9117,13 @@ public class Translation_csharp : TranslationBase<TranslationInfo>
         // What was on the top screen on page 1 in Red Cipher?
         [Question.RedCipherScreen] = new()
         {
-            NeedsTranslation = true,
-            QuestionText = "What was on the {1} screen on page {2} in {0}?",
+            QuestionText = "{0}\uE47F.screens{1}\uE47F.pages[{2}]",
+            ModuleName = "redCipher",
             FormatArgs = new Dictionary<string, string>
             {
-                ["top"] = "top",
-                ["middle"] = "middle",
-                ["bottom"] = "bottom",
+                ["top"] = "0",
+                ["middle"] = "1",
+                ["bottom"] = "2",
             },
         },
 
@@ -11750,13 +11750,13 @@ public class Translation_csharp : TranslationBase<TranslationInfo>
         // What was on the top screen on page 1 in Ultimate Cipher?
         [Question.UltimateCipherScreen] = new()
         {
-            NeedsTranslation = true,
-            QuestionText = "What was on the {1} screen on page {2} in {0}?",
+            QuestionText = "{0}\uE47F.screens{1}\uE47F.pages[{2}]",
+            ModuleName = "ultimateCipher",
             FormatArgs = new Dictionary<string, string>
             {
-                ["top"] = "top",
-                ["middle"] = "middle",
-                ["bottom"] = "bottom",
+                ["top"] = "0",
+                ["middle"] = "1",
+                ["bottom"] = "2",
             },
         },
 
@@ -12322,13 +12322,13 @@ public class Translation_csharp : TranslationBase<TranslationInfo>
         // What was on the top screen on page 1 in Violet Cipher?
         [Question.VioletCipherScreen] = new()
         {
-            NeedsTranslation = true,
-            QuestionText = "What was on the {1} screen on page {2} in {0}?",
+            QuestionText = "{0}\uE47F.screens{1}\uE47F.pages[{2}]",
+            ModuleName = "violetCipher",
             FormatArgs = new Dictionary<string, string>
             {
-                ["top"] = "top",
-                ["middle"] = "middle",
-                ["bottom"] = "bottom",
+                ["top"] = "0",
+                ["middle"] = "1",
+                ["bottom"] = "2",
             },
         },
 
@@ -12504,13 +12504,13 @@ public class Translation_csharp : TranslationBase<TranslationInfo>
         // What was on the top screen on page 1 in White Cipher?
         [Question.WhiteCipherScreen] = new()
         {
-            NeedsTranslation = true,
-            QuestionText = "What was on the {1} screen on page {2} in {0}?",
+            QuestionText = "{0}\uE47F.screens{1}\uE47F.pages[{2}]",
+            ModuleName = "whiteCipher",
             FormatArgs = new Dictionary<string, string>
             {
-                ["top"] = "top",
-                ["middle"] = "middle",
-                ["bottom"] = "bottom",
+                ["top"] = "0",
+                ["middle"] = "1",
+                ["bottom"] = "2",
             },
         },
 
@@ -12802,13 +12802,13 @@ public class Translation_csharp : TranslationBase<TranslationInfo>
         // What was on the top screen on page 1 in Yellow Cipher?
         [Question.YellowCipherScreen] = new()
         {
-            NeedsTranslation = true,
-            QuestionText = "What was on the {1} screen on page {2} in {0}?",
+            QuestionText = "{0}\uE47F.screens{1}\uE47F.pages[{2}]",
+            ModuleName = "yellowCipher",
             FormatArgs = new Dictionary<string, string>
             {
-                ["top"] = "top",
-                ["middle"] = "middle",
-                ["bottom"] = "bottom",
+                ["top"] = "0",
+                ["middle"] = "1",
+                ["bottom"] = "2",
             },
         },
 
@@ -12817,52 +12817,52 @@ public class Translation_csharp : TranslationBase<TranslationInfo>
         // What color was the top-left star in Zero, Zero?
         [Question.ZeroZeroStarColors] = new()
         {
-            NeedsTranslation = true,
-            QuestionText = "What color was the {1} star in {0}?",
+            QuestionText = "{0}\uE47F.stars[{1}]\uE47F.color",
+            ModuleName = "zeroZero",
             FormatArgs = new Dictionary<string, string>
             {
-                ["top-left"] = "top-left",
-                ["top-right"] = "top-right",
-                ["bottom-left"] = "bottom-left",
-                ["bottom-right"] = "bottom-right",
+                ["top-left"] = "0",
+                ["top-right"] = "1",
+                ["bottom-left"] = "2",
+                ["bottom-right"] = "3",
             },
             Answers = new Dictionary<string, string>
             {
-                ["black"] = "black",
-                ["blue"] = "blue",
-                ["green"] = "green",
-                ["cyan"] = "cyan",
-                ["red"] = "red",
-                ["magenta"] = "magenta",
-                ["yellow"] = "yellow",
-                ["white"] = "white",
+                ["black"] = "Color.Black",
+                ["blue"] = "Color.Blue",
+                ["green"] = "Color.Green",
+                ["cyan"] = "Color.Cyan",
+                ["red"] = "Color.Red",
+                ["magenta"] = "Color.Magenta",
+                ["yellow"] = "Color.Yellow",
+                ["white"] = "Color.White",
             },
         },
         // How many points were on the {1} star in {0}?
         // How many points were on the top-left star in Zero, Zero?
         [Question.ZeroZeroStarPoints] = new()
         {
-            NeedsTranslation = true,
-            QuestionText = "How many points were on the {1} star in {0}?",
+            QuestionText = "{0}\uE47F.stars[{1}]\uE47F.points",
+            ModuleName = "zeroZero",
             FormatArgs = new Dictionary<string, string>
             {
-                ["top-left"] = "top-left",
-                ["top-right"] = "top-right",
-                ["bottom-left"] = "bottom-left",
-                ["bottom-right"] = "bottom-right",
+                ["top-left"] = "0",
+                ["top-right"] = "1",
+                ["bottom-left"] = "2",
+                ["bottom-right"] = "3",
             },
         },
         // Where was the {1} square in {0}?
         // Where was the red square in Zero, Zero?
         [Question.ZeroZeroSquares] = new()
         {
-            NeedsTranslation = true,
-            QuestionText = "Where was the {1} square in {0}?",
+            QuestionText = "{0}\uE47F.squares\uE47F.{1}",
+            ModuleName = "zeroZero",
             FormatArgs = new Dictionary<string, string>
             {
-                ["red"] = "red",
-                ["green"] = "green",
-                ["blue"] = "blue",
+                ["red"] = "Red",
+                ["green"] = "Green",
+                ["blue"] = "Blue",
             },
         },
 
@@ -12871,8 +12871,8 @@ public class Translation_csharp : TranslationBase<TranslationInfo>
         // What was the first word in Zoni?
         [Question.ZoniWords] = new()
         {
-            NeedsTranslation = true,
-            QuestionText = "What was the {1} word in {0}?",
+            QuestionText = "{0}\uE47F.words{1}",
+            ModuleName = "lgndZoni",
         },
 
         #endregion
