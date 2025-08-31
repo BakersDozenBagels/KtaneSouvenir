@@ -12879,6 +12879,7 @@ public class Translation_csharp : TranslationBase<TranslationInfo>
     };
 
     public override string[] IntroTexts => Ut.NewArray(
+        // Common usings in Ktane Modules
         "using System;",
         "using System\uE47F.Collections;",
         "using System\uE47F.Collections\uE47F.Generic;",
@@ -12890,6 +12891,27 @@ public class Translation_csharp : TranslationBase<TranslationInfo>
         "using System\uE47F.Reflection\uE47F.Emit;",
         "using System\uE47F.Text;",
         "using UnityEngine;",
-        "using Souvenir;"
+        "using Souvenir;",
+        "using KMFramework;",
+
+        // Souvenir internals
+        "GetComponent\uE47F<KMBombModule>()\uE47F.OnActivate += hideIntroText;",
+        "private IEnumerator ProcessTwitchCommand\uE47F(string command) { /* ... */  }",
+        "private IEnumerator TwitchHandleForcedSolve() { /* ... */  }",
+        "private IEnumerator\uE47F<YieldInstruction> ProcessSouvenir\uE47F(ModuleData module) { /* ... */ }",
+        "makeQuestion\uE47F(Question\uE47F.ButtonLightColor, module, correctAnswers: new[] { answer })",
+        "legitimatelyNoQuestions\uE47F(\"No modules have been solved yet.\")",
+        "$\"the {question\uE47F.GetAttribute()\uE47F.ModuleName} you solved {Ordinal(\uE47FnumSolved)}\"",
+        "public class Translation_csharp : TranslationBase\uE47F<TranslationInfo> { /* ... */ }",
+
+        // General C# features/programs
+        "System\uE47F.Console\uE47F.WriteLine(\"Hello, World!\");", // Hello World program
+        "private static int _moduleIdCounter; private int _moduleId = ++_moduleIdCounter;", // Common design pattern in Ktane Modules
+        "var text = @\"var text = \"\"{0}\"\"; display\uE47F.text = string.Format(text, text.Replace(@\"\"\"\"\"\"\"\", @\"\"\"\"\"\"\"\"\"\"\"\"));\"; display\uE47F.text = string.Format(text, text.Replace(@\"\"\"\", @\"\"\"\"\"\"));", // Quine program
+        "from q in questions where Bomb\uE47F.GetSolvedModuleNames\uE47F()\uE47F.Contains(q\uE47F.Module) select makeQuestion(q)", // LINQ
+        "display\uE47F.text = IntroTexts[i] switch { [.. var s, ';'] => s, s => s };", // Pattern Matching
+        "var text =\n#if\u00A0UNITY_EDITOR\n\"Editor\";\n#else\n\"Runtime\";\n#endif\n", // Preprocessor
+        "public interface IIntroText { /* ... */ }", // Interfaces
+        "((Action)\uE47F(() => { Console\uE47F.WriteLine(\uE47F\"Howdy!\"); }))()" // IIFE
     );
 }
