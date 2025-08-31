@@ -12104,6 +12104,13 @@ public class Translation_de : TranslationBase<Translation_de.TranslationInfo_de>
         {
             NeedsTranslation = true,
             QuestionText = "What was the {1} displayed in the {2} sequence of {0}?",
+            FormatArgs = new Dictionary<string, string>
+            {
+                ["word"] = "word",
+                ["“YES”"] = "“YES”",
+                ["colour of the word"] = "colour of the word",
+                ["“NO”"] = "“NO”",
+            },
         },
 
         // Unfair Cipher

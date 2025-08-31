@@ -598,7 +598,7 @@ public class Translation_csharp : TranslationBase<TranslationInfo>
         // Which of these cards was shown in Stage 1, but not T, in The Azure Button?
         [Question.AzureButtonNotT] = new()
         {
-            QuestionText = "{0} is not var m ? null : m\uE47F.cards\uE47F.Except([m\uE47F.T])",
+            QuestionText = "{0} is var m ? m\uE47F.cards\uE47F.Except([m\uE47F.T]) : null",
             ModuleName = "AzureButtonModule",
         },
         // What was M in {0}?
@@ -11781,8 +11781,8 @@ public class Translation_csharp : TranslationBase<TranslationInfo>
         // What was the first rotation in The Ultracube?
         [Question.UltracubeRotations] = new()
         {
-            NeedsTranslation = true,
-            QuestionText = "What was the {1} rotation in {0}?",
+            QuestionText = "{0}\uE47F.rotations{1}",
+            ModuleName = "TheUltracubeModule",
         },
 
         // UltraStores
@@ -11790,15 +11790,15 @@ public class Translation_csharp : TranslationBase<TranslationInfo>
         // What was the first rotation in the first stage of UltraStores?
         [Question.UltraStoresSingleRotation] = new()
         {
-            NeedsTranslation = true,
-            QuestionText = "What was the {1} rotation in the {2} stage of {0}?",
+            QuestionText = "{0}\uE47F.stages{2}\uE47F.rotations{1}",
+            ModuleName = "UltraStores",
         },
         // What was the {1} rotation in the {2} stage of {0}?
         // What was the first rotation in the first stage of UltraStores?
         [Question.UltraStoresMultiRotation] = new()
         {
-            NeedsTranslation = true,
-            QuestionText = "What was the {1} rotation in the {2} stage of {0}?",
+            QuestionText = "{0}\uE47F.stages{2}\uE47F.rotations{1}",
+            ModuleName = "UltraStores",
         },
 
         // Uncolored Squares
@@ -11806,16 +11806,16 @@ public class Translation_csharp : TranslationBase<TranslationInfo>
         // What was the first color in reading order used in the first stage of Uncolored Squares?
         [Question.UncoloredSquaresFirstStage] = new()
         {
-            NeedsTranslation = true,
-            QuestionText = "What was the {1} color in reading order used in the first stage of {0}?",
+            QuestionText = "{0}\uE47F.stages[0]\uE47F.usedColors{1}",
+            ModuleName = "UncoloredSquaresModule",
             Answers = new Dictionary<string, string>
             {
-                ["White"] = "White",
-                ["Red"] = "Red",
-                ["Blue"] = "Blue",
-                ["Green"] = "Green",
-                ["Yellow"] = "Yellow",
-                ["Magenta"] = "Magenta",
+                ["White"] = "Color.White",
+                ["Red"] = "Color.Red",
+                ["Blue"] = "Color.Blue",
+                ["Green"] = "Color.Green",
+                ["Yellow"] = "Color.Yellow",
+                ["Magenta"] = "Color.Magenta",
             },
         },
 
@@ -11824,25 +11824,25 @@ public class Translation_csharp : TranslationBase<TranslationInfo>
         // What was the initial state of the switches in Uncolored Switches?
         [Question.UncoloredSwitchesInitialState] = new()
         {
-            NeedsTranslation = true,
-            QuestionText = "What was the initial state of the switches in {0}?",
+            QuestionText = "{0}\uE47F.initialState",
+            ModuleName = "R4YUncoloredSwitches",
         },
         // What color was the {1} LED in reading order in {0}?
         // What color was the first LED in reading order in Uncolored Switches?
         [Question.UncoloredSwitchesLedColors] = new()
         {
-            NeedsTranslation = true,
-            QuestionText = "What color was the {1} LED in reading order in {0}?",
+            QuestionText = "{0}\uE47F.leds{1}.color",
+            ModuleName = "R4YUncoloredSwitches",
             Answers = new Dictionary<string, string>
             {
-                ["red"] = "red",
-                ["green"] = "green",
-                ["blue"] = "blue",
-                ["turquoise"] = "turquoise",
-                ["orange"] = "orange",
-                ["purple"] = "purple",
-                ["white"] = "white",
-                ["black"] = "black",
+                ["red"] = "Color.Red",
+                ["green"] = "Color.Green",
+                ["blue"] = "Color.Blue",
+                ["turquoise"] = "Color.Turquoise",
+                ["orange"] = "Color.Orange",
+                ["purple"] = "Color.Purple",
+                ["white"] = "Color.White",
+                ["black"] = "Color.Black",
             },
         },
 
@@ -11851,8 +11851,15 @@ public class Translation_csharp : TranslationBase<TranslationInfo>
         // What was the word in the first position of the “YES” sequence of Uncolour Flash?
         [Question.UncolourFlashDisplays] = new()
         {
-            NeedsTranslation = true,
-            QuestionText = "What was the {1} in the {2} position of the {3} sequence of {0}?",
+            QuestionText = "{0}\uE47F.{1}Sequence{2}\uE47F.{1}",
+            ModuleName = "uncolourFlash",
+            FormatArgs = new Dictionary<string, string>
+            {
+                ["word"] = "word",
+                ["“YES”"] = "yes",
+                ["colour of the word"] = "colour",
+                ["“NO”"] = "no",
+            },
         },
 
         // Unfair Cipher
@@ -11860,8 +11867,8 @@ public class Translation_csharp : TranslationBase<TranslationInfo>
         // What was the first received instruction in Unfair Cipher?
         [Question.UnfairCipherInstructions] = new()
         {
-            NeedsTranslation = true,
-            QuestionText = "What was the {1} received instruction in {0}?",
+            QuestionText = "{0}\uE47F.instructions{1}",
+            ModuleName = "unfairCipher",
         },
 
         // Unfair’s Revenge
@@ -11869,8 +11876,8 @@ public class Translation_csharp : TranslationBase<TranslationInfo>
         // What was the first decrypted instruction in Unfair’s Revenge?
         [Question.UnfairsRevengeInstructions] = new()
         {
-            NeedsTranslation = true,
-            QuestionText = "What was the {1} decrypted instruction in {0}?",
+            QuestionText = "{0}\uE47F.decryptedInstructions{1}",
+            ModuleName = "unfairsRevenge",
         },
 
         // Unicode
@@ -11878,8 +11885,8 @@ public class Translation_csharp : TranslationBase<TranslationInfo>
         // What was the first submitted code in Unicode?
         [Question.UnicodeSortedAnswer] = new()
         {
-            NeedsTranslation = true,
-            QuestionText = "What was the {1} submitted code in {0}?",
+            QuestionText = "{0}\uE47F.submission{1}",
+            ModuleName = "UnicodeModule",
         },
 
         // UNO!
@@ -11887,64 +11894,64 @@ public class Translation_csharp : TranslationBase<TranslationInfo>
         // What was the initial card in UNO!?
         [Question.UnoInitialCard] = new()
         {
-            NeedsTranslation = true,
-            QuestionText = "What was the initial card in {0}?",
+            QuestionText = "{0}\uE47F.cards.First()",
+            ModuleName = "UNO",
             Answers = new Dictionary<string, string>
             {
-                ["Red 0"] = "Red 0",
-                ["Red 1"] = "Red 1",
-                ["Red 2"] = "Red 2",
-                ["Red 3"] = "Red 3",
-                ["Red 4"] = "Red 4",
-                ["Red 5"] = "Red 5",
-                ["Red 6"] = "Red 6",
-                ["Red 7"] = "Red 7",
-                ["Red 8"] = "Red 8",
-                ["Red 9"] = "Red 9",
-                ["Red +2"] = "Red +2",
-                ["Red Skip"] = "Red Skip",
-                ["Red Reverse"] = "Red Reverse",
-                ["Green 0"] = "Green 0",
-                ["Green 1"] = "Green 1",
-                ["Green 2"] = "Green 2",
-                ["Green 3"] = "Green 3",
-                ["Green 4"] = "Green 4",
-                ["Green 5"] = "Green 5",
-                ["Green 6"] = "Green 6",
-                ["Green 7"] = "Green 7",
-                ["Green 8"] = "Green 8",
-                ["Green 9"] = "Green 9",
-                ["Green +2"] = "Green +2",
-                ["Green Skip"] = "Green Skip",
-                ["Green Reverse"] = "Green Reverse",
-                ["Yellow 0"] = "Yellow 0",
-                ["Yellow 1"] = "Yellow 1",
-                ["Yellow 2"] = "Yellow 2",
-                ["Yellow 3"] = "Yellow 3",
-                ["Yellow 4"] = "Yellow 4",
-                ["Yellow 5"] = "Yellow 5",
-                ["Yellow 6"] = "Yellow 6",
-                ["Yellow 7"] = "Yellow 7",
-                ["Yellow 8"] = "Yellow 8",
-                ["Yellow 9"] = "Yellow 9",
-                ["Yellow +2"] = "Yellow +2",
-                ["Yellow Skip"] = "Yellow Skip",
-                ["Yellow Reverse"] = "Yellow Reverse",
-                ["Blue 0"] = "Blue 0",
-                ["Blue 1"] = "Blue 1",
-                ["Blue 2"] = "Blue 2",
-                ["Blue 3"] = "Blue 3",
-                ["Blue 4"] = "Blue 4",
-                ["Blue 5"] = "Blue 5",
-                ["Blue 6"] = "Blue 6",
-                ["Blue 7"] = "Blue 7",
-                ["Blue 8"] = "Blue 8",
-                ["Blue 9"] = "Blue 9",
-                ["Blue +2"] = "Blue +2",
-                ["Blue Skip"] = "Blue Skip",
-                ["Blue Reverse"] = "Blue Reverse",
-                ["+4"] = "+4",
-                ["Wild"] = "Wild",
+                ["Red 0"] = "(\"Red\", \"0\")",
+                ["Red 1"] = "(\"Red\", \"1\")",
+                ["Red 2"] = "(\"Red\", \"2\")",
+                ["Red 3"] = "(\"Red\", \"3\")",
+                ["Red 4"] = "(\"Red\", \"4\")",
+                ["Red 5"] = "(\"Red\", \"5\")",
+                ["Red 6"] = "(\"Red\", \"6\")",
+                ["Red 7"] = "(\"Red\", \"7\")",
+                ["Red 8"] = "(\"Red\", \"8\")",
+                ["Red 9"] = "(\"Red\", \"9\")",
+                ["Red +2"] = "(\"Red\", \"+2\")",
+                ["Red Skip"] = "(\"Red\", \"Skip\")",
+                ["Red Reverse"] = "(\"Red\", \"Reverse\")",
+                ["Green 0"] = "(\"Green\", \"0\")",
+                ["Green 1"] = "(\"Green\", \"1\")",
+                ["Green 2"] = "(\"Green\", \"2\")",
+                ["Green 3"] = "(\"Green\", \"3\")",
+                ["Green 4"] = "(\"Green\", \"4\")",
+                ["Green 5"] = "(\"Green\", \"5\")",
+                ["Green 6"] = "(\"Green\", \"6\")",
+                ["Green 7"] = "(\"Green\", \"7\")",
+                ["Green 8"] = "(\"Green\", \"8\")",
+                ["Green 9"] = "(\"Green\", \"9\")",
+                ["Green +2"] = "(\"Green\", \"+2\")",
+                ["Green Skip"] = "(\"Green\", \"Skip\")",
+                ["Green Reverse"] = "(\"Green\", \"Reverse\")",
+                ["Yellow 0"] = "(\"Yellow\", \"0\")",
+                ["Yellow 1"] = "(\"Yellow\", \"1\")",
+                ["Yellow 2"] = "(\"Yellow\", \"2\")",
+                ["Yellow 3"] = "(\"Yellow\", \"3\")",
+                ["Yellow 4"] = "(\"Yellow\", \"4\")",
+                ["Yellow 5"] = "(\"Yellow\", \"5\")",
+                ["Yellow 6"] = "(\"Yellow\", \"6\")",
+                ["Yellow 7"] = "(\"Yellow\", \"7\")",
+                ["Yellow 8"] = "(\"Yellow\", \"8\")",
+                ["Yellow 9"] = "(\"Yellow\", \"9\")",
+                ["Yellow +2"] = "(\"Yellow\", \"+2\")",
+                ["Yellow Skip"] = "(\"Yellow\", \"Skip\")",
+                ["Yellow Reverse"] = "(\"Yellow\", \"Reverse\")",
+                ["Blue 0"] = "(\"Blue\", \"0\")",
+                ["Blue 1"] = "(\"Blue\", \"1\")",
+                ["Blue 2"] = "(\"Blue\", \"2\")",
+                ["Blue 3"] = "(\"Blue\", \"3\")",
+                ["Blue 4"] = "(\"Blue\", \"4\")",
+                ["Blue 5"] = "(\"Blue\", \"5\")",
+                ["Blue 6"] = "(\"Blue\", \"6\")",
+                ["Blue 7"] = "(\"Blue\", \"7\")",
+                ["Blue 8"] = "(\"Blue\", \"8\")",
+                ["Blue 9"] = "(\"Blue\", \"9\")",
+                ["Blue +2"] = "(\"Blue\", \"+2\")",
+                ["Blue Skip"] = "(\"Blue\", \"Skip\")",
+                ["Blue Reverse"] = "(\"Blue\", \"Reverse\")",
+                ["+4"] = "(\"Wild\", \"+4\")",
+                ["Wild"] = "(\"Wild\", \"Wild\")",
             },
         },
 
@@ -11953,22 +11960,22 @@ public class Translation_csharp : TranslationBase<TranslationInfo>
         // What color was this key in the first stage of Unordered Keys?
         [Question.UnorderedKeysKeyColor] = new()
         {
-            NeedsTranslation = true,
-            QuestionText = "What color was this key in the {1} stage of {0}?",
+            QuestionText = "{0}\uE47F.stages{1}\uE47F.keys[value]\uE47F.color",
+            ModuleName = "unorderedKeys",
         },
         // What color was the label of this key in the {1} stage of {0}?
         // What color was the label of this key in the first stage of Unordered Keys?
         [Question.UnorderedKeysLabelColor] = new()
         {
-            NeedsTranslation = true,
-            QuestionText = "What color was the label of this key in the {1} stage of {0}?",
+            QuestionText = "{0}\uE47F.stages{1}\uE47F.keys[value]\uE47F.label.color",
+            ModuleName = "unorderedKeys",
         },
         // What was the label of this key in the {1} stage of {0}?
         // What was the label of this key in the first stage of Unordered Keys?
         [Question.UnorderedKeysLabel] = new()
         {
-            NeedsTranslation = true,
-            QuestionText = "What was the label of this key in the {1} stage of {0}?",
+            QuestionText = "{0}\uE47F.stages{1}\uE47F.keys[value]\uE47F.label.text",
+            ModuleName = "unorderedKeys",
         },
 
         // Unown Cipher
@@ -11976,8 +11983,8 @@ public class Translation_csharp : TranslationBase<TranslationInfo>
         // What was the first submitted letter in Unown Cipher?
         [Question.UnownCipherAnswers] = new()
         {
-            NeedsTranslation = true,
-            QuestionText = "What was the {1} submitted letter in {0}?",
+            QuestionText = "{0}\uE47F.submission{1}",
+            ModuleName = "UnownCipher",
         },
 
         // Unpleasant Squares
@@ -11985,15 +11992,15 @@ public class Translation_csharp : TranslationBase<TranslationInfo>
         // What was the color of this square in Unpleasant Squares?
         [Question.UnpleasantSquaresColor] = new()
         {
-            NeedsTranslation = true,
-            QuestionText = "What was the color of this square in {0}?",
+            QuestionText = "{0}\uE47F.squares[value]\uE47F.color",
+            ModuleName = "unpleasantSquares",
             Answers = new Dictionary<string, string>
             {
-                ["Red"] = "Red",
-                ["Yellow"] = "Yellow",
-                ["Jade"] = "Jade",
-                ["Azure"] = "Azure",
-                ["Violet"] = "Violet",
+                ["Red"] = "Color.Red",
+                ["Yellow"] = "Color.Yellow",
+                ["Jade"] = "Color.Jade",
+                ["Azure"] = "Color.Azure",
+                ["Violet"] = "Color.Violet",
             },
         },
 
@@ -12002,28 +12009,28 @@ public class Translation_csharp : TranslationBase<TranslationInfo>
         // What was the text on Updog?
         [Question.UpdogWord] = new()
         {
-            NeedsTranslation = true,
-            QuestionText = "What was the text on {0}?",
+            QuestionText = "{0}\uE47F.text",
+            ModuleName = "Updog",
         },
         // What was the {1} color in the sequence on {0}?
         // What was the first color in the sequence on Updog?
         [Question.UpdogColor] = new()
         {
-            NeedsTranslation = true,
-            QuestionText = "What was the {1} color in the sequence on {0}?",
+            QuestionText = "{0}\uE47F.colorSequence\uE47F{1}",
+            ModuleName = "Updog",
             FormatArgs = new Dictionary<string, string>
             {
-                ["first"] = "first",
-                ["last"] = "last",
+                ["first"] = ".First()",
+                ["last"] = ".Last()",
             },
             Answers = new Dictionary<string, string>
             {
-                ["Red"] = "Red",
-                ["Yellow"] = "Yellow",
-                ["Orange"] = "Orange",
-                ["Green"] = "Green",
-                ["Blue"] = "Blue",
-                ["Purple"] = "Purple",
+                ["Red"] = "Color.Red",
+                ["Yellow"] = "Color.Yellow",
+                ["Orange"] = "Color.Orange",
+                ["Green"] = "Color.Green",
+                ["Blue"] = "Color.Blue",
+                ["Purple"] = "Color.Purple",
             },
         },
 
