@@ -203,10 +203,10 @@ public enum Question
     [SouvenirQuestion("What was M in {0}?", "Azure Button", ThreeColumns6Answers, "1", "2", "3", "4", "5", "6", "7", "8", "9", AddThe = true)]
     AzureButtonM,
     [SouvenirQuestion("What was the {1} direction in the decoy arrow in {0}?", "Azure Button", TwoColumns4Answers, "north", "north-east", "east", "south-east", "south", "south-west", "west", "north-west",
-        AddThe = true, ExampleFormatArguments = new[] { QandA.Ordinal }, ExampleFormatArgumentGroupSize = 1)]
+        AddThe = true, ExampleFormatArguments = new[] { QandA.Ordinal }, ExampleFormatArgumentGroupSize = 1, TranslateAnswers = true)]
     AzureButtonDecoyArrowDirection,
     [SouvenirQuestion("What was the {1} direction in the {2} non-decoy arrow in {0}?", "Azure Button", TwoColumns4Answers, "north", "north-east", "east", "south-east", "south", "south-west", "west", "north-west",
-        AddThe = true, ExampleFormatArguments = new[] { QandA.Ordinal, QandA.Ordinal }, ExampleFormatArgumentGroupSize = 2)]
+        AddThe = true, ExampleFormatArguments = new[] { QandA.Ordinal, QandA.Ordinal }, ExampleFormatArgumentGroupSize = 2, TranslateAnswers = true)]
     AzureButtonNonDecoyArrowDirection,
 
     [SouvenirQuestion("Which menu item was present in {0}?", "Bakery", OneColumn4Answers,

@@ -513,7 +513,7 @@ public partial class SouvenirModule
 
         yield return WaitForSolve;
 
-        var dirNames = Question.AzureButtonDecoyArrowDirection.GetAnswers().Select(dir => translateString(Question.AzureButtonT, dir)).ToArray();
+        var dirNames = Question.AzureButtonDecoyArrowDirection.GetAnswers();
         var candidateDiscriminators = new List<(string format, string name, Sprite qSprite)> { (null, null, null) };
         foreach (var card in cards)
             if (_azureButtonInfos.Count(tup => tup.cards.Contains(card)) == 1)
@@ -525,8 +525,8 @@ public partial class SouvenirModule
                 if (_azureButtonInfos.Count(tup => tup.arrowDirs[arrowIx].Contains(dir)) == 1)
                     candidateDiscriminators.Add((
                         arrowIx == 0
-                            ? string.Format(translateString(Question.AzureButtonT, "the Azure Button where the decoy arrow went {0} at some point"), dirNames[dir])
-                            : string.Format(translateString(Question.AzureButtonT, "the Azure Button where the {1} non-decoy arrow went {0} at some point"), dirNames[dir], Ordinal(arrowIx)),
+                            ? string.Format(translateString(Question.AzureButtonT, "the Azure Button where the decoy arrow went {0} at some point"), translateString(Question.AzureButtonT, dirNames[dir]))
+                            : string.Format(translateString(Question.AzureButtonT, "the Azure Button where the {1} non-decoy arrow went {0} at some point"), translateString(Question.AzureButtonT, dirNames[dir]), Ordinal(arrowIx)),
                         "ar", null));
 
         var qs = new List<QandA>();

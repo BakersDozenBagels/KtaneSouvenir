@@ -601,15 +601,39 @@ public class Translation_ja : TranslationBase<TranslationInfo>
         // What was the first direction in the decoy arrow in The Azure Button?
         [Question.AzureButtonDecoyArrowDirection] = new()
         {
+            NeedsTranslation = true,
             QuestionText = "{0}の囮の矢印が{1}番目に示した方向は？",
             ModuleName = "空色ボタン",
+            Answers = new Dictionary<string, string>
+            {
+                ["north"] = "north",
+                ["north-east"] = "north-east",
+                ["east"] = "east",
+                ["south-east"] = "south-east",
+                ["south"] = "south",
+                ["south-west"] = "south-west",
+                ["west"] = "west",
+                ["north-west"] = "north-west",
+            },
         },
         // What was the {1} direction in the {2} non-decoy arrow in {0}?
         // What was the first direction in the first non-decoy arrow in The Azure Button?
         [Question.AzureButtonNonDecoyArrowDirection] = new()
         {
+            NeedsTranslation = true,
             QuestionText = "{0}の囮ではない{2}番目の矢印が{1}番目に示した方向は？",
             ModuleName = "空色ボタン",
+            Answers = new Dictionary<string, string>
+            {
+                ["north"] = "north",
+                ["north-east"] = "north-east",
+                ["east"] = "east",
+                ["south-east"] = "south-east",
+                ["south"] = "south",
+                ["south-west"] = "south-west",
+                ["west"] = "west",
+                ["north-west"] = "north-west",
+            },
         },
 
         // Bakery

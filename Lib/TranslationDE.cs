@@ -1,4 +1,4 @@
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using static Souvenir.Translation_de.Gender;
 
 namespace Souvenir;
@@ -634,17 +634,41 @@ public class Translation_de : TranslationBase<Translation_de.TranslationInfo_de>
         // What was the first direction in the decoy arrow in The Azure Button?
         [Question.AzureButtonDecoyArrowDirection] = new()
         {
+            NeedsTranslation = true,
             ModuleNameWithThe = "Der Azurfarbene Knopf",
             QuestionText = "Was war bei {0} die {1}e Richtung im ungenutzten Pfeil?",
             ModuleName = "Azurfarbenen Knopf",
+            Answers = new Dictionary<string, string>
+            {
+                ["north"] = "Norden",
+                ["north-east"] = "Nordosten",
+                ["east"] = "Osten",
+                ["south-east"] = "Südosten",
+                ["south"] = "Süden",
+                ["south-west"] = "Südwesten",
+                ["west"] = "Westen",
+                ["north-west"] = "Nordwesten",
+            },
         },
         // What was the {1} direction in the {2} non-decoy arrow in {0}?
         // What was the first direction in the first non-decoy arrow in The Azure Button?
         [Question.AzureButtonNonDecoyArrowDirection] = new()
         {
+            NeedsTranslation = true,
             ModuleNameWithThe = "Der Azurfarbene Knopf",
             QuestionText = "Was war bei {0} die {1}e Richtung im {2}en genutzten Pfeil?",
             ModuleName = "Azurfarbenen Knopf",
+            Answers = new Dictionary<string, string>
+            {
+                ["north"] = "Norden",
+                ["north-east"] = "Nordosten",
+                ["east"] = "Osten",
+                ["south-east"] = "Südosten",
+                ["south"] = "Süden",
+                ["south-west"] = "Südwesten",
+                ["west"] = "Westen",
+                ["north-west"] = "Nordwesten",
+            },
         },
 
         // Bakery
