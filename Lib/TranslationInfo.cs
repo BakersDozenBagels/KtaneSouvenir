@@ -15,6 +15,7 @@ public class TranslationInfo
     {
         ["de"] = new Translation_de(),
         ["ja"] = new Translation_ja(),
-        ["ru"] = new Translation_ru()
+        ["ru"] = new Translation_ru(),
+        ["csharp"] = new Translation_csharp()
     };
 }

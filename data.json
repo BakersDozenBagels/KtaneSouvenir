@@ -2,9 +2,5 @@
     "contributorsCount": 36,
     "modulesCount": 683,
     "questionsCount": 1019,
-<<<<<<< HEAD
-    "translationProgress": { "de": "40.63%", "ja": "91.56%", "ru": "89.50%" }
-=======
-    "translationProgress": { "de": "38.86%", "ja": "91.36%", "ru": "89.30%" }
->>>>>>> ee5718ff (Fix Azure Button handler)
+    "translationProgress": { "de": "40.43%", "ja": "91.36%", "ru": "89.30%", "csharp": "1.96%" }
 }

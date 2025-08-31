@@ -234,6 +234,7 @@ public static class Ut
     private static readonly (char from, char to)[] _breakableRanges = new (char from, char to)[] {
         ('\u4E00', '\u9FA0'),   // CJK
         ('\u3041','\u30ff'),    // Hiragana + Katakana
+        ('\uE47F', '\uE47F'),   // Manual wrapping point
     };
 
     public static IEnumerable<string> WordWrap(this string text, Func<int, double> wrapWidth, double widthOfASpace, Func<string, double> measure, bool allowBreakingWordsApart)

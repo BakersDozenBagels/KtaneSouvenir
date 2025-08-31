@@ -304,6 +304,7 @@ public static class Program
                 case '\r': result.Append(@"\r"); break;
                 case '\\': result.Append(@"\\"); break;
                 case '"': result.Append(@"\"""); break;
+                case '\uE47F': result.Append(@"\uE47F"); break;
                 default:
                     if (c >= 0xE000 && c < 0xF900) // Private Use Area
                         result.AppendFormat(@"\u{0:X4}", (int) c);
