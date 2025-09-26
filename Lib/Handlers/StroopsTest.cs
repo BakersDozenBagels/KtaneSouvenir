@@ -7,10 +7,16 @@ using static Souvenir.AnswerLayout;
 public enum SStroopsTest
 {
     [SouvenirQuestion("What was the {1} submitted word in {0}?", ThreeColumns6Answers, "Red", "Yellow", "Green", "Blue", "Magenta", "White", Arguments = [QandA.Ordinal], ArgumentGroupSize = 1)]
-    Word,
+    QWord,
 
     [SouvenirQuestion("What was the {1} submitted word’s color in {0}?", ThreeColumns6Answers, "Red", "Yellow", "Green", "Blue", "Magenta", "White", Arguments = [QandA.Ordinal], ArgumentGroupSize = 1, TranslateAnswers = true)]
-    Color
+    QColor,
+
+    [SouvenirDiscriminator("the Stroop’s Test whose {0} submitted word was “{1}”", Arguments = [QandA.Ordinal, "red", QandA.Ordinal, "yellow", QandA.Ordinal, "green", QandA.Ordinal, "blue", QandA.Ordinal, "magenta", QandA.Ordinal, "white"], ArgumentGroupSize = 2)]
+    DWord,
+
+    [SouvenirDiscriminator("the Stroop’s Test whose {0} submitted word’s color was {1}", Arguments = [QandA.Ordinal, "red", QandA.Ordinal, "yellow", QandA.Ordinal, "green", QandA.Ordinal, "blue", QandA.Ordinal, "magenta", QandA.Ordinal, "white"], ArgumentGroupSize = 2, TranslateArguments = [false, true])]
+    DColor,
 }
 
 public partial class SouvenirModule
@@ -50,9 +56,28 @@ public partial class SouvenirModule
         if (usedWords.Any(s => s is -1) || usedColors.Any(s => s is -1))
             throw new AbandonModuleException($"A stage was somehow missed ({usedWords.Stringify()}), ({usedColors.Stringify()})");
 
-        for (var i = 0; i < usedWords.Length; i++)
-            yield return question(SStroopsTest.Word, args: [Ordinal(i + 1)]).Answers(SStroopsTest.Word.GetAnswers()[usedWords[i]]);
-        for (var i = 0; i < usedColors.Length; i++)
-            yield return question(SStroopsTest.Color, args: [Ordinal(i + 1)]).Answers(SStroopsTest.Color.GetAnswers()[usedColors[i]]);
+        // It's not wrong to conditionally yield return discriminators here because the condition is global.
+        var usingColors = Bomb.GetSerialNumberNumbers().Last() % 2 == 0;
+
+        if (usingColors)
+        {
+            for (var i = 0; i < usedColors.Length; i++)
+                yield return new Discriminator(SStroopsTest.DColor, $"color{i}", usedColors[i], [Ordinal(i + 1), SStroopsTest.QColor.GetAnswers()[usedColors[i]].ToLowerInvariant()]);
+
+            for (var i = 0; i < usedColors.Length; i++)
+                yield return question(SStroopsTest.QColor, args: [Ordinal(i + 1)])
+                    .AvoidDiscriminators($"color{i}")
+                    .Answers(SStroopsTest.QColor.GetAnswers()[usedColors[i]]);
+        }
+        else
+        {
+            for (var i = 0; i < usedWords.Length; i++)
+                yield return new Discriminator(SStroopsTest.DWord, $"word{i}", usedWords[i], [Ordinal(i + 1), SStroopsTest.QWord.GetAnswers()[usedWords[i]].ToLowerInvariant()]);
+
+            for (var i = 0; i < usedWords.Length; i++)
+                yield return question(SStroopsTest.QWord, args: [Ordinal(i + 1)])
+                    .AvoidDiscriminators($"word{i}")
+                    .Answers(SStroopsTest.QWord.GetAnswers()[usedWords[i]]);
+        }
     }
 }
