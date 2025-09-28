@@ -91,7 +91,6 @@ public partial class SouvenirModule : MonoBehaviour
     public AudioClip[] ExampleAudio;
     public AudioClip[] FaerieFiresAudio;
     public AudioClip[] ListeningAudio;
-    public AudioClip[] MultiverseHotlineAudio;
     public AudioClip[] SimonSamplesAudio;
     public AudioClip[] SimonSmilesAudio;
     public AudioClip[] SonicTheHedgehogAudio;
